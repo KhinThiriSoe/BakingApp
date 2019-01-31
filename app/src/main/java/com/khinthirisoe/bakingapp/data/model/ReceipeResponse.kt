@@ -2,7 +2,7 @@ package com.khinthirisoe.bakingapp.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class BakingResponse(
+data class ReceipeResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
