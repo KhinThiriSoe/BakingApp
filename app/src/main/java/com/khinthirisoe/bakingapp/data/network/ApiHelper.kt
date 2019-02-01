@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface ApiHelper {
 
     @GET(ApiEndPoint.GET_RECEIPE)
-    fun getReceipeList(): Single<ReceipeResponse>
+    fun getReceipeList(): Single<ArrayList<ReceipeResponse>>
 }

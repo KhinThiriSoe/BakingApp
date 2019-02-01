@@ -17,8 +17,8 @@ constructor(private val mApiHelper: ApiHelper) {
         mApiHelper.getReceipeList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<ReceipeResponse> {
-                override fun onSuccess(t: ReceipeResponse) {
+            .subscribe(object : SingleObserver<ArrayList<ReceipeResponse>> {
+                override fun onSuccess(t: ArrayList<ReceipeResponse>) {
                     listener.onFetchReceipeSuccess(t)
                 }
 

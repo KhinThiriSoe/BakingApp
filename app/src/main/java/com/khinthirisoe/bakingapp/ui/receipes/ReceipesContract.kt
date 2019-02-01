@@ -8,7 +8,7 @@ interface ReceipesContract {
 
     interface View : BaseView {
 
-        fun showReceipes(receipes: ReceipeResponse)
+        fun showReceipes(receipes: ArrayList<ReceipeResponse>)
 
         fun showMessage(message: String)
     }

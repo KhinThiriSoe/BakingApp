@@ -16,7 +16,7 @@ constructor(var interactor: ReceipesInteractor) : ReceipesContract.Presenter {
         if (view != null) view?.showProgress()
         interactor.fetchReceipes(
             object : OnFetchReceipeListener {
-                override fun onFetchReceipeSuccess(receipeResponse: ReceipeResponse) {
+                override fun onFetchReceipeSuccess(receipeResponse: ArrayList<ReceipeResponse>) {
                     if (view != null) {
                         view?.showReceipes(receipeResponse)
                         view?.hideProgress()
@@ -48,7 +48,7 @@ constructor(var interactor: ReceipesInteractor) : ReceipesContract.Presenter {
 
     interface OnFetchReceipeListener {
 
-        fun onFetchReceipeSuccess(receipeResponse: ReceipeResponse)
+        fun onFetchReceipeSuccess(receipeResponse: ArrayList<ReceipeResponse>)
 
         fun onFetchReceipeFailed(message: String)
 
