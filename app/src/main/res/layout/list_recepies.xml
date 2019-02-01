@@ -1,34 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_height="150dp">
 
-    <ImageView
-            android:id="@+id/img_receipe"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/guideline"
-            app:layout_constraintGuide_percent="0.6"
-            android:orientation="vertical"/>
+        <ImageView
+                android:id="@+id/img_receipe"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:layout_height="wrap_content"/>
 
-    <TextView
-            android:id="@+id/txt_serving"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+        <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_percent="0.6"
+                android:orientation="vertical"/>
 
+        <TextView
+                android:id="@+id/txt_receipe_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/txt_serving"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/txt_no_of_serving"
+                android:id="@+id/txt_serving"
+                app:layout_constraintTop_toTopOf="@id/txt_receipe_name"
+                android:textStyle="bold"
+                android:text="@string/servings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/txt_no_of_serving"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@id/txt_serving"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -31,8 +31,10 @@ class ReceipesAdapter(private val context: Context, private var mData: MutableLi
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
+
         var imageReceipe = itemView.img_receipe
-        var txtServing = itemView.txt_serving
+        var txtServing = itemView.txt_no_of_serving
+        var receipeName = itemView.txt_receipe_name
 
         override fun onBind(position: Int) {
             super.onBind(position)
@@ -40,10 +42,23 @@ class ReceipesAdapter(private val context: Context, private var mData: MutableLi
             val list = mData[position]
 
             setUpUI(list)
+
+            imageReceipe.setImageDrawable(context.resources.getDrawable(getImages(position)))
+
+
         }
 
         private fun setUpUI(receipe: ReceipeResponse) {
             txtServing.text = receipe.servings.toString()
+            receipeName.text = receipe.name
+        }
+
+        fun getImages(position: Int): Int {
+
+            val recepieImage =
+                arrayOf(R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake)
+
+            return recepieImage[position]
         }
     }
 }

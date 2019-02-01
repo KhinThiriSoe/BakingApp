@@ -1,9 +1,12 @@
 package com.khinthirisoe.bakingapp.ui.receipes.view
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.ReceipeResponse
 import com.khinthirisoe.bakingapp.di.component.AppComponent
 import com.khinthirisoe.bakingapp.di.component.DaggerActivityComponent
@@ -19,6 +22,7 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View {
     lateinit var presenter: ReceipesContract.Presenter
 
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mProgressBar: ProgressBar
     private var mAdapter: ReceipesAdapter? = null
 
     override fun setupComponent(appComponent: AppComponent) {
@@ -33,9 +37,10 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View {
         super.onCreate(savedInstanceState)
         setContentView(com.khinthirisoe.bakingapp.R.layout.activity_receipes)
 
-        presenter.fetchReceipes()
+        mRecyclerView = findViewById(R.id.recyclerView)
+        mProgressBar = findViewById(R.id.progressBar)
 
-        mRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.recyclerView)
+        presenter.fetchReceipes()
 
         val mLayoutManager = LinearLayoutManager(this)
         mRecyclerView.layoutManager = mLayoutManager
@@ -44,7 +49,7 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View {
 
     override fun showReceipes(receipes: ArrayList<ReceipeResponse>) {
 
-        mAdapter = ReceipesAdapter(this, receipes)
+        mAdapter = ReceipesAdapter(this, receipes as MutableList<ReceipeResponse>)
         mRecyclerView.adapter = mAdapter
     }
 
@@ -53,8 +58,10 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View {
     }
 
     override fun showProgress() {
+        mProgressBar.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        mProgressBar.visibility = View.GONE
     }
 }
