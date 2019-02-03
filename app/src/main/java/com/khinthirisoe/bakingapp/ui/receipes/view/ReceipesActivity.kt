@@ -16,7 +16,7 @@ import com.khinthirisoe.bakingapp.ui.receipes.ReceipesContract
 import javax.inject.Inject
 
 
-class ReceipesActivity : BaseActivity(), ReceipesContract.View {
+class ReceipesActivity : BaseActivity(), ReceipesContract.View, ReceipesAdapter.ReceipeRecyclerViewClickListener {
 
     @Inject
     lateinit var presenter: ReceipesContract.Presenter
@@ -49,8 +49,12 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View {
 
     override fun showReceipes(receipes: ArrayList<ReceipeResponse>) {
 
-        mAdapter = ReceipesAdapter(this, receipes as MutableList<ReceipeResponse>)
+        mAdapter = ReceipesAdapter(this, receipes as MutableList<ReceipeResponse>, this)
         mRecyclerView.adapter = mAdapter
+    }
+
+    override fun listItemClick(list: ReceipeResponse) {
+        Toast.makeText(this, list.name, Toast.LENGTH_SHORT).show()
     }
 
     override fun showMessage(message: String) {

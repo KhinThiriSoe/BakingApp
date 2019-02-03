@@ -10,7 +10,11 @@ import com.khinthirisoe.bakingapp.ui.base.BaseViewHolder
 import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_recepies.view.*
 
-class ReceipesAdapter(private val context: Context, private var mData: MutableList<ReceipeResponse>) :
+class ReceipesAdapter(
+    private val mContext: Context,
+    private val mData: MutableList<ReceipeResponse>,
+    private val clickListener: ReceipeRecyclerViewClickListener
+) :
     RecyclerView.Adapter<ReceipesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +35,6 @@ class ReceipesAdapter(private val context: Context, private var mData: MutableLi
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-
         var imageReceipe = itemView.img_receipe
         var txtServing = itemView.txt_no_of_serving
         var receipeName = itemView.txt_receipe_name
@@ -43,8 +46,11 @@ class ReceipesAdapter(private val context: Context, private var mData: MutableLi
 
             setUpUI(list)
 
-            imageReceipe.setImageDrawable(context.resources.getDrawable(getImages(position)))
+            imageReceipe.setImageDrawable(mContext.resources.getDrawable(getImages(position)))
 
+            itemView.setOnClickListener {
+                clickListener.listItemClick(list)
+            }
 
         }
 
@@ -60,5 +66,9 @@ class ReceipesAdapter(private val context: Context, private var mData: MutableLi
 
             return recepieImage[position]
         }
+    }
+
+    interface ReceipeRecyclerViewClickListener {
+        fun listItemClick(list: ReceipeResponse)
     }
 }
