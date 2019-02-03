@@ -6,34 +6,36 @@ import com.google.gson.annotations.SerializedName
 
 
 data class ReceipeResponse(
-        @SerializedName("id")
-        var id: Int,
-        @SerializedName("name")
-        var name: String,
-        @SerializedName("ingredients")
-        var ingredients: List<Ingredient>,
-        @SerializedName("steps")
-        var steps: List<Step>,
-        @SerializedName("servings")
-        var servings: Int,
-        @SerializedName("image")
-        var image: String) : Parcelable {
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("ingredients")
+    val ingredients: List<Ingredient>,
+    @SerializedName("steps")
+    val steps: List<Step>,
+    @SerializedName("servings")
+    val servings: Int,
+    @SerializedName("image")
+    val image: String?
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
-        TODO("ingredients"),
-        TODO("steps"),
+        parcel.createTypedArrayList(Ingredient.CREATOR),
+        parcel.createTypedArrayList(Step.CREATOR),
         parcel.readInt(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeInt(servings)
         parcel.writeString(image)
+        parcel.writeTypedList(ingredients)
+        parcel.writeTypedList(steps)
     }
 
     override fun describeContents(): Int {
@@ -49,4 +51,5 @@ data class ReceipeResponse(
             return arrayOfNulls(size)
         }
     }
+
 }

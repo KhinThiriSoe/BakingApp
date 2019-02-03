@@ -1,5 +1,6 @@
 package com.khinthirisoe.bakingapp.ui.receipes.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -12,6 +13,7 @@ import com.khinthirisoe.bakingapp.di.component.AppComponent
 import com.khinthirisoe.bakingapp.di.component.DaggerActivityComponent
 import com.khinthirisoe.bakingapp.di.module.ActivityModule
 import com.khinthirisoe.bakingapp.ui.base.BaseActivity
+import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
 import com.khinthirisoe.bakingapp.ui.receipes.ReceipesContract
 import javax.inject.Inject
 
@@ -54,7 +56,9 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View, ReceipesAdapter.
     }
 
     override fun listItemClick(list: ReceipeResponse) {
-        Toast.makeText(this, list.name, Toast.LENGTH_SHORT).show()
+        val forward = Intent(this, IngredientsActivity::class.java)
+        forward.putExtra("data", list)
+        startActivity(forward)
     }
 
     override fun showMessage(message: String) {
