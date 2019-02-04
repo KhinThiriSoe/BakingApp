@@ -5,9 +5,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Ingredient(
-    @SerializedName("quantity") val quantity: String?,
-    @SerializedName("measure") val measure: String?,
-    @SerializedName("ingredient") val ingredient: String?
+    @SerializedName("quantity") var quantity: String?,
+    @SerializedName("measure") var measure: String?,
+    @SerializedName("ingredient") var ingredient: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
