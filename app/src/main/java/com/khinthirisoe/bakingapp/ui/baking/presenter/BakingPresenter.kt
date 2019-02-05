@@ -1,6 +1,6 @@
 package com.khinthirisoe.bakingapp.ui.baking.presenter
 
-import com.khinthirisoe.bakingapp.data.model.BakingRecipe
+import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.ui.baking.BakingContract
 import com.khinthirisoe.bakingapp.ui.baking.model.BakingRepository
 import io.reactivex.disposables.Disposable
@@ -17,9 +17,9 @@ constructor(var repository: BakingRepository) : BakingContract.Presenter {
         if (view != null) view?.showProgress()
         repository.fetchRecipes(
             object : OnFetchRecipeListener {
-                override fun onFetchRecipeSuccess(bakingRecipe: ArrayList<BakingRecipe>) {
+                override fun onFetchRecipeSuccess(recipe: ArrayList<Recipe>) {
                     if (view != null) {
-                        view?.showBakingLists(bakingRecipe)
+                        view?.showBakingLists(recipe)
                         view?.hideProgress()
                     }
                 }
@@ -49,7 +49,7 @@ constructor(var repository: BakingRepository) : BakingContract.Presenter {
 
     interface OnFetchRecipeListener {
 
-        fun onFetchRecipeSuccess(bakingRecipe: ArrayList<BakingRecipe>)
+        fun onFetchRecipeSuccess(recipe: ArrayList<Recipe>)
 
         fun onFetchRecipeFailed(message: String)
 

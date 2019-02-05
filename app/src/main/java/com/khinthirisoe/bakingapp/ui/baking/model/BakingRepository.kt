@@ -1,7 +1,7 @@
 package com.khinthirisoe.bakingapp.ui.baking.model
 
-import com.khinthirisoe.bakingapp.data.model.BakingRecipe
-import com.khinthirisoe.bakingapp.data.network.BakingApiService
+import com.khinthirisoe.bakingapp.data.model.Recipe
+import com.khinthirisoe.bakingapp.data.network.ApiHelper
 import com.khinthirisoe.bakingapp.ui.baking.presenter.BakingPresenter
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,15 +11,15 @@ import javax.inject.Inject
 
 class BakingRepository @Inject
 
-constructor(private val bakingApiService: BakingApiService) {
+constructor(private val apiHelper: ApiHelper) {
 
     fun fetchRecipes(listener: BakingPresenter.OnFetchRecipeListener) {
 
-        bakingApiService.getBakingRecipes()
+        apiHelper.getBakingRecipes()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<ArrayList<BakingRecipe>> {
-                override fun onSuccess(t: ArrayList<BakingRecipe>) {
+            .subscribe(object : SingleObserver<ArrayList<Recipe>> {
+                override fun onSuccess(t: ArrayList<Recipe>) {
                     listener.onFetchRecipeSuccess(t)
                 }
 

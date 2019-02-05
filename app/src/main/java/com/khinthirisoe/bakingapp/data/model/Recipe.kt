@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class BakingRecipe(
+data class Recipe(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("ingredients") val ingredients: ArrayList<Ingredient>,
@@ -35,12 +35,12 @@ data class BakingRecipe(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<BakingRecipe> {
-        override fun createFromParcel(parcel: Parcel): BakingRecipe {
-            return BakingRecipe(parcel)
+    companion object CREATOR : Parcelable.Creator<Recipe> {
+        override fun createFromParcel(parcel: Parcel): Recipe {
+            return Recipe(parcel)
         }
 
-        override fun newArray(size: Int): Array<BakingRecipe?> {
+        override fun newArray(size: Int): Array<Recipe?> {
             return arrayOfNulls(size)
         }
     }

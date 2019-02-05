@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.data.model.BakingRecipe
+import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
@@ -25,7 +25,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
 
-        val bakingRecipe = intent.getParcelableExtra<BakingRecipe>("baking")
+        val bakingRecipe = intent.getParcelableExtra<Recipe>("baking")
         bakingName = bakingRecipe.name
 
         setUpToolbar()
@@ -55,11 +55,11 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         stepRecyclerView.layoutManager = mLayoutManager
     }
 
-    private fun configureUI(bakingRecipe: BakingRecipe) {
-        ingredientsAdapter = IngredientsAdapter(this, bakingRecipe.ingredients as MutableList<Ingredient>)
+    private fun configureUI(recipe: Recipe) {
+        ingredientsAdapter = IngredientsAdapter(this, recipe.ingredients as MutableList<Ingredient>)
         ingredientRecyclerView.adapter = ingredientsAdapter
 
-        stepsAdapter = StepsAdapter(this, bakingRecipe.steps as MutableList<Step>, this)
+        stepsAdapter = StepsAdapter(this, recipe.steps as MutableList<Step>, this)
         stepRecyclerView.adapter = stepsAdapter
     }
 

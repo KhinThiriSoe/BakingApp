@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.data.model.BakingRecipe
+import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.di.component.AppComponent
 import com.khinthirisoe.bakingapp.di.component.DaggerActivityComponent
 import com.khinthirisoe.bakingapp.di.module.ActivityModule
@@ -54,12 +54,12 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
 
     }
 
-    override fun showBakingLists(bakingList: ArrayList<BakingRecipe>) {
-        bakingAdapter = BakingAdapter(this, bakingList as MutableList<BakingRecipe>, this)
+    override fun showBakingLists(list: ArrayList<Recipe>) {
+        bakingAdapter = BakingAdapter(this, list as MutableList<Recipe>, this)
         bakingRecyclerView.adapter = bakingAdapter
     }
 
-    override fun listItemClick(baking: BakingRecipe) {
+    override fun listItemClick(baking: Recipe) {
         startActivity(Intent(this, IngredientsActivity::class.java).putExtra("baking", baking))
     }
 

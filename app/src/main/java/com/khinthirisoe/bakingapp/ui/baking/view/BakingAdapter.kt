@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.data.model.BakingRecipe
+import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.ui.base.BaseViewHolder
 import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_baking.view.*
 
 class BakingAdapter(
     private val context: Context,
-    private val bakingList: MutableList<BakingRecipe>,
+    private val list: MutableList<Recipe>,
     private val clickListener: BakingRecyclerViewClickListener
 ) :
     RecyclerView.Adapter<BakingAdapter.ViewHolder>() {
@@ -26,8 +26,8 @@ class BakingAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (bakingList.isNotEmpty() && bakingList.size > 0) {
-            bakingList.size
+        return if (list.isNotEmpty() && list.size > 0) {
+            list.size
         } else {
             0
         }
@@ -42,7 +42,7 @@ class BakingAdapter(
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            val list = bakingList[position]
+            val list = list[position]
 
             setUpUI(list)
 
@@ -54,7 +54,7 @@ class BakingAdapter(
 
         }
 
-        private fun setUpUI(baking: BakingRecipe) {
+        private fun setUpUI(baking: Recipe) {
             servingTextView.text = baking.servings.toString()
             bakingName.text = baking.name
         }
@@ -69,6 +69,6 @@ class BakingAdapter(
     }
 
     interface BakingRecyclerViewClickListener {
-        fun listItemClick(baking: BakingRecipe)
+        fun listItemClick(baking: Recipe)
     }
 }
