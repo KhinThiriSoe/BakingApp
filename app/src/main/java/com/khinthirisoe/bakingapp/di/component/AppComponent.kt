@@ -1,7 +1,7 @@
 package com.khinthirisoe.bakingapp.di.component
 
 import android.content.Context
-import com.khinthirisoe.bakingapp.data.network.ApiHelper
+import com.khinthirisoe.bakingapp.data.network.BakingApiService
 import com.khinthirisoe.bakingapp.di.App
 import com.khinthirisoe.bakingapp.di.context.ApplicationContext
 import com.khinthirisoe.bakingapp.di.module.ApplicationModule
@@ -19,5 +19,5 @@ interface AppComponent {
 
     fun app(): App
 
-    fun apiHelper(): ApiHelper
+    fun apiService(): BakingApiService
 }

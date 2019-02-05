@@ -10,11 +10,11 @@ import com.khinthirisoe.bakingapp.ui.base.BaseViewHolder
 import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_ingredients.view.*
 
-class IngreditentsAdapter(
-    private val mContext: Context,
-    private val mData: MutableList<Ingredient>
+class IngredientsAdapter(
+    private val context: Context,
+    private val ingredientList: MutableList<Ingredient>
 ) :
-    RecyclerView.Adapter<IngreditentsAdapter.ViewHolder>() {
+    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.list_ingredients))
@@ -25,8 +25,8 @@ class IngreditentsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (mData.isNotEmpty() && mData.size > 0) {
-            mData.size
+        return if (ingredientList.isNotEmpty() && ingredientList.size > 0) {
+            ingredientList.size
         } else {
             0
         }
@@ -34,14 +34,15 @@ class IngreditentsAdapter(
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-        val ingredientTextView = itemView.txt_ingredient
+        private val ingredientTextView = itemView.txt_ingredient
 
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            val list = mData[position]
+            val ingredient = ingredientList[position]
+            val ingredientString = ingredient.ingredient + " " + ingredient.quantity + " " + ingredient.measure
 
-            ingredientTextView.text = list.ingredient + " " + list.quantity + " " + list.measure
+            ingredientTextView.text = ingredientString
 
         }
     }

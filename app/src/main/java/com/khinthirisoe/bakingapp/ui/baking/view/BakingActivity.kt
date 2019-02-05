@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui.receipes.view
+package com.khinthirisoe.bakingapp.ui.baking.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.data.model.ReceipeResponse
+import com.khinthirisoe.bakingapp.data.model.BakingRecipe
 import com.khinthirisoe.bakingapp.di.component.AppComponent
 import com.khinthirisoe.bakingapp.di.component.DaggerActivityComponent
 import com.khinthirisoe.bakingapp.di.module.ActivityModule
+import com.khinthirisoe.bakingapp.ui.baking.BakingContract
 import com.khinthirisoe.bakingapp.ui.base.BaseActivity
 import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
-import com.khinthirisoe.bakingapp.ui.receipes.ReceipesContract
 import javax.inject.Inject
 
 
-class ReceipesActivity : BaseActivity(), ReceipesContract.View, ReceipesAdapter.ReceipeRecyclerViewClickListener {
+class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.BakingRecyclerViewClickListener {
 
     @Inject
-    lateinit var presenter: ReceipesContract.Presenter
+    lateinit var presenter: BakingContract.Presenter
 
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mProgressBar: ProgressBar
-    private var mAdapter: ReceipesAdapter? = null
+    private lateinit var bakingRecyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
+    private var bakingAdapter: BakingAdapter? = null
 
     override fun setupComponent(appComponent: AppComponent) {
         val component =
@@ -37,28 +37,30 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View, ReceipesAdapter.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.khinthirisoe.bakingapp.R.layout.activity_receipes)
+        setContentView(com.khinthirisoe.bakingapp.R.layout.activity_baking)
 
-        mRecyclerView = findViewById(R.id.recyclerView)
-        mProgressBar = findViewById(R.id.progressBar)
+        initView()
 
-        presenter.fetchReceipes()
+        presenter.fetchBakingRecipes()
+    }
+
+    private fun initView() {
+
+        bakingRecyclerView = findViewById(R.id.recyclerView)
+        progressBar = findViewById(R.id.progressBar)
 
         val mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView.layoutManager = mLayoutManager
+        bakingRecyclerView.layoutManager = mLayoutManager
 
     }
 
-    override fun showReceipes(receipes: ArrayList<ReceipeResponse>) {
-
-        mAdapter = ReceipesAdapter(this, receipes as MutableList<ReceipeResponse>, this)
-        mRecyclerView.adapter = mAdapter
+    override fun showBakingLists(bakingList: ArrayList<BakingRecipe>) {
+        bakingAdapter = BakingAdapter(this, bakingList as MutableList<BakingRecipe>, this)
+        bakingRecyclerView.adapter = bakingAdapter
     }
 
-    override fun listItemClick(list: ReceipeResponse) {
-        val forward = Intent(this, IngredientsActivity::class.java)
-        forward.putExtra("data", list)
-        startActivity(forward)
+    override fun listItemClick(baking: BakingRecipe) {
+        startActivity(Intent(this, IngredientsActivity::class.java).putExtra("baking", baking))
     }
 
     override fun showMessage(message: String) {
@@ -66,10 +68,10 @@ class ReceipesActivity : BaseActivity(), ReceipesContract.View, ReceipesAdapter.
     }
 
     override fun showProgress() {
-        mProgressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        mProgressBar.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 }

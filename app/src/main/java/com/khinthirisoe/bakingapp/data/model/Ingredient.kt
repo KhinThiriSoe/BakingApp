@@ -9,6 +9,7 @@ data class Ingredient(
     @SerializedName("measure") var measure: String?,
     @SerializedName("ingredient") var ingredient: String?
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),

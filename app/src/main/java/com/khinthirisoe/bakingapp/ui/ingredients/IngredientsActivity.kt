@@ -1,57 +1,70 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
+import com.khinthirisoe.bakingapp.data.model.BakingRecipe
 import com.khinthirisoe.bakingapp.data.model.Ingredient
-import com.khinthirisoe.bakingapp.data.model.ReceipeResponse
 import com.khinthirisoe.bakingapp.data.model.Step
+import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
 
 
-class IngredientsActivity : AppCompatActivity() {
+class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
 
-    private lateinit var mIngredientRecyclerView: RecyclerView
-    private var mIngreditentsAdapter: IngreditentsAdapter? = null
-    private lateinit var mStepRecyclerView: RecyclerView
-    private var mStepsAdapter: StepsAdapter? = null
+    private lateinit var ingredientRecyclerView: RecyclerView
+    private var ingredientsAdapter: IngredientsAdapter? = null
+    private lateinit var stepRecyclerView: RecyclerView
+    private var stepsAdapter: StepsAdapter? = null
 
-
-    private lateinit var receipeName: String
+    private lateinit var bakingName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
 
-        val data = intent.getParcelableExtra<ReceipeResponse>("data")
-        receipeName = data.name
+        val bakingRecipe = intent.getParcelableExtra<BakingRecipe>("baking")
+        bakingName = bakingRecipe.name
 
         setUpToolbar()
 
-        mIngredientRecyclerView = findViewById(R.id.ingredient_recyclerView)
-        mStepRecyclerView = findViewById(R.id.step_recyclerView)
+        setUpView()
 
-        val mIngredientLayoutManager = LinearLayoutManager(this)
-        mIngredientRecyclerView.layoutManager = mIngredientLayoutManager
-
-        val mLayoutManager = LinearLayoutManager(this)
-        mStepRecyclerView.layoutManager = mLayoutManager
-
-        mIngreditentsAdapter = IngreditentsAdapter(this, data.ingredients as MutableList<Ingredient>)
-        mIngredientRecyclerView.adapter = mIngreditentsAdapter
-
-        mStepsAdapter = StepsAdapter(this, data.steps as MutableList<Step>)
-        mStepRecyclerView.adapter = mStepsAdapter
+        configureUI(bakingRecipe)
     }
 
     private fun setUpToolbar() {
         if (supportActionBar != null) {
-            supportActionBar?.title = receipeName
+            supportActionBar?.title = bakingName
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }
+    }
 
+    private fun setUpView() {
+
+        ingredientRecyclerView = findViewById(R.id.ingredient_recyclerView)
+        stepRecyclerView = findViewById(R.id.step_recyclerView)
+
+        val mIngredientLayoutManager = LinearLayoutManager(this)
+        ingredientRecyclerView.layoutManager = mIngredientLayoutManager
+
+        val mLayoutManager = LinearLayoutManager(this)
+        stepRecyclerView.layoutManager = mLayoutManager
+    }
+
+    private fun configureUI(bakingRecipe: BakingRecipe) {
+        ingredientsAdapter = IngredientsAdapter(this, bakingRecipe.ingredients as MutableList<Ingredient>)
+        ingredientRecyclerView.adapter = ingredientsAdapter
+
+        stepsAdapter = StepsAdapter(this, bakingRecipe.steps as MutableList<Step>, this)
+        stepRecyclerView.adapter = stepsAdapter
+    }
+
+    override fun listItemClick(step: Step) {
+        startActivity(Intent(this, StepsActivity::class.java).putExtra("step", step))
     }
 
     override fun onSupportNavigateUp(): Boolean {

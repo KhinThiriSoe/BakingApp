@@ -1,6 +1,6 @@
 package com.khinthirisoe.bakingapp.ui.base
 
-interface BaseView{
+interface BaseView {
 
     fun showProgress()
 

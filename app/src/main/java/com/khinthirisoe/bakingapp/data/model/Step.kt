@@ -11,6 +11,7 @@ data class Step(
     @SerializedName("videoURL") var videoURL: String?,
     @SerializedName("thumbnailURL") var thumbnailURL: String?
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),

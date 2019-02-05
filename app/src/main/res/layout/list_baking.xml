@@ -13,7 +13,7 @@
             android:layout_height="match_parent">
 
         <ImageView
-                android:id="@+id/img_receipe"
+                android:id="@+id/img_baking"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline"
@@ -30,7 +30,7 @@
                 android:orientation="vertical"/>
 
         <TextView
-                android:id="@+id/txt_receipe_name"
+                android:id="@+id/txt_baking_name"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/txt_no_of_serving"
                 android:id="@+id/txt_serving"
-                app:layout_constraintTop_toTopOf="@id/txt_receipe_name"
+                app:layout_constraintTop_toTopOf="@id/txt_baking_name"
                 android:textStyle="bold"
                 android:text="@string/servings"
                 android:layout_width="wrap_content"

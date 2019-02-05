@@ -3,7 +3,7 @@ package com.khinthirisoe.bakingapp.di.module
 import android.content.Context
 import com.google.gson.Gson
 import com.khinthirisoe.bakingapp.data.network.ApiEndPoint
-import com.khinthirisoe.bakingapp.data.network.ApiHelper
+import com.khinthirisoe.bakingapp.data.network.BakingApiService
 import com.khinthirisoe.bakingapp.di.App
 import com.khinthirisoe.bakingapp.di.context.ApplicationContext
 import dagger.Module
@@ -31,7 +31,7 @@ class ApplicationModule(private val app: App) {
 
     @Provides
     @Singleton
-    fun apiHelper(): ApiHelper {
+    fun apiService(): BakingApiService {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -55,6 +55,6 @@ class ApplicationModule(private val app: App) {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
-            .create(ApiHelper::class.java)
+            .create(BakingApiService::class.java)
     }
 }
