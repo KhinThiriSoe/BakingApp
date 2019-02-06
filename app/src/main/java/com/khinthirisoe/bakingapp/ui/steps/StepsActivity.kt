@@ -2,6 +2,7 @@ package com.khinthirisoe.bakingapp.ui.steps
 
 import android.os.Build
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ui.PlayerView
 import com.khinthirisoe.bakingapp.R
@@ -14,6 +15,7 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
     }
 
     private lateinit var videoView: PlayerView
+    private lateinit var descriptionView: TextView
     private lateinit var presenter: StepsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +32,12 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
     private fun init() {
         presenter = StepsPresenter(this)
         videoView = findViewById(R.id.ep_video_view)
+        descriptionView = findViewById(R.id.txt_description)
 
-        val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
+        val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
         videoView.player = presenter.getPlayer().getPlayerImpl(this)
-        presenter.play(videoUrl.videoURL!!)
+        presenter.play(step.videoURL!!)
+        descriptionView.text = step.description
     }
 
     override fun onPause() {
