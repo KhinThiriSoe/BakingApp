@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Ingredient
+import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
 
 
 class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
+
+    companion object {
+        const val EXTRA_BAKING = "extra_baking"
+    }
 
     private lateinit var ingredientRecyclerView: RecyclerView
     private var ingredientsAdapter: IngredientsAdapter? = null
@@ -25,7 +29,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
 
-        val bakingRecipe = intent.getParcelableExtra<Recipe>("baking")
+        val bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
         bakingName = bakingRecipe.name
 
         setUpToolbar()
@@ -64,7 +68,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     }
 
     override fun listItemClick(step: Step) {
-        startActivity(Intent(this, StepsActivity::class.java).putExtra("step", step))
+        startActivity(Intent(this, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step))
     }
 
     override fun onSupportNavigateUp(): Boolean {

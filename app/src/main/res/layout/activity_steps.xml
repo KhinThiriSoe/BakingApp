@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
         tools:context=".ui.steps.StepsActivity">
 
+    <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/ep_video_view"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:layout_height="230dp"/>
 
+    <TextView
+            android:layout_marginTop="@dimen/standard_margin"
+            android:id="@+id/txt_description"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -60,7 +60,7 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
     }
 
     override fun listItemClick(baking: Recipe) {
-        startActivity(Intent(this, IngredientsActivity::class.java).putExtra("baking", baking))
+        startActivity(Intent(this, IngredientsActivity::class.java).putExtra(IngredientsActivity.EXTRA_BAKING, baking))
     }
 
     override fun showMessage(message: String) {
