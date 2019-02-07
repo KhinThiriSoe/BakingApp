@@ -3,7 +3,6 @@ package com.khinthirisoe.bakingapp.ui.steps.view
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,13 +21,22 @@ class StepVideoFragment : Fragment(), StepsContract.View {
     companion object {
         const val EXTRA_STEP = "extra_step"
 
-        fun newInstance(step: Step, position: Int): StepVideoFragment {
-            val bundle = Bundle()
-            bundle.putParcelable(EXTRA_STEP, step)
-            bundle.putInt("position", position)
-            val f = StepVideoFragment()
-            f.arguments = bundle
-            return f
+        const val STEP_ID = "id"
+        const val STEP_DESCRIPTION = "description"
+        const val STEP_SHORT_DESCRIPTION = "short_description"
+        const val STEP_VIDEO = "video"
+
+        fun newInstance(step: Step): StepVideoFragment {
+
+            val args = Bundle()
+            args.putInt(STEP_ID, step.id)
+            args.putString(STEP_DESCRIPTION, step.description)
+            args.putString(STEP_SHORT_DESCRIPTION, step.shortDescription)
+            args.putString(STEP_VIDEO, step.videoURL)
+
+            val fragment = StepVideoFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
@@ -36,39 +44,37 @@ class StepVideoFragment : Fragment(), StepsContract.View {
     private lateinit var videoView: PlayerView
     private lateinit var descriptionView: TextView
 
-    private var step: Step? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         presenter = StepsPresenter(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_step_video, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val rootView = inflater.inflate(R.layout.fragment_step_video, container, false)
+        videoView = rootView.findViewById(R.id.ep_video_view)
+        descriptionView = rootView.findViewById(R.id.txt_description)
 
-        videoView = view.findViewById(R.id.ep_video_view)
-        descriptionView = view.findViewById(R.id.txt_description)
+        val args = arguments
+        val id = args?.getInt(STEP_ID)
+        val description = args?.getString(STEP_DESCRIPTION)
+        val shortDescription = args?.getString(STEP_SHORT_DESCRIPTION)
+        val videolUrl = args?.getString(STEP_VIDEO)
 
-        step = arguments!!.getParcelable(EXTRA_STEP)
-        val position = arguments!!.getInt("position")
-
-        setUpToolbar(position)
+        setUpToolbar()
 
         videoView.player = presenter!!.getPlayer().getPlayerImpl(context!!)
-        presenter!!.play(step?.videoURL!!)
-        descriptionView.text = step?.description
+        presenter!!.play(videolUrl!!)
+        descriptionView.text = description
+
+        return rootView
     }
 
-    private fun setUpToolbar(position: Int) {
+    private fun setUpToolbar() {
 
         if ((activity as AppCompatActivity).supportActionBar != null) {
             (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-            Log.d("message", position.toString())
-            (activity as AppCompatActivity).supportActionBar?.title = "Step $position"
         }
     }
 

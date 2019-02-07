@@ -3,6 +3,7 @@ package com.khinthirisoe.bakingapp.ui.steps.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
 
@@ -14,7 +15,9 @@ class StepsActivity : AppCompatActivity() {
         const val EXTRA_STEP_LIST = "extra_step_list"
     }
 
-    private var viewPager: ViewPager? = null
+    private lateinit var viewPager: ViewPager
+    private lateinit var pagerAdapter: StepPagerAdapter
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +27,17 @@ class StepsActivity : AppCompatActivity() {
     }
 
     private fun setUpView() {
-        viewPager = findViewById(R.id.view_pager)
-
         val steps = intent.getParcelableArrayListExtra<Step>(EXTRA_STEP_LIST)
         val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
 
-        val adapter = StatePageAdapter(supportFragmentManager, steps)
-        viewPager!!.adapter = adapter
+        viewPager = findViewById(R.id.viewPager)
+        tabLayout = findViewById(R.id.tabLayout)
+
+        pagerAdapter = StepPagerAdapter(supportFragmentManager, steps)
+
+        viewPager.adapter = pagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
