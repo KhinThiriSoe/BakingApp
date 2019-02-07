@@ -36,8 +36,20 @@ class StepsActivity : AppCompatActivity() {
         pagerAdapter = StepPagerAdapter(supportFragmentManager, steps)
 
         viewPager.adapter = pagerAdapter
+        viewPager.currentItem = step.id
         tabLayout.setupWithViewPager(viewPager)
 
+        setUpToolbar()
+
+    }
+
+    private fun setUpToolbar() {
+
+        if (supportActionBar != null) {
+            supportActionBar?.title = "Steps"
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

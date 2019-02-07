@@ -23,7 +23,7 @@
 
                 <TextView
                         android:padding="5dp"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textColor="@android:color/black"
                         android:text="@string/ingredients"
                         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
 
                 <TextView
                         android:padding="5dp"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textColor="@android:color/black"
                         android:text="@string/steps"
                         android:layout_width="match_parent"

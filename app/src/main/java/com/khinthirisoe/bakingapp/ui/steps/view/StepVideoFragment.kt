@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.exoplayer2.ui.PlayerView
 import com.khinthirisoe.bakingapp.R
@@ -43,6 +42,7 @@ class StepVideoFragment : Fragment(), StepsContract.View {
     private var presenter: StepsContract.Presenter? = null
     private lateinit var videoView: PlayerView
     private lateinit var descriptionView: TextView
+    private lateinit var shortDescriptionView: TextView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,6 +54,14 @@ class StepVideoFragment : Fragment(), StepsContract.View {
         val rootView = inflater.inflate(R.layout.fragment_step_video, container, false)
         videoView = rootView.findViewById(R.id.ep_video_view)
         descriptionView = rootView.findViewById(R.id.txt_description)
+        shortDescriptionView = rootView.findViewById(R.id.txt_short_description)
+
+        configureUI()
+
+        return rootView
+    }
+
+    private fun configureUI() {
 
         val args = arguments
         val id = args?.getInt(STEP_ID)
@@ -61,21 +69,12 @@ class StepVideoFragment : Fragment(), StepsContract.View {
         val shortDescription = args?.getString(STEP_SHORT_DESCRIPTION)
         val videolUrl = args?.getString(STEP_VIDEO)
 
-        setUpToolbar()
 
         videoView.player = presenter!!.getPlayer().getPlayerImpl(context!!)
         presenter!!.play(videolUrl!!)
         descriptionView.text = description
+        shortDescriptionView.text = shortDescription
 
-        return rootView
-    }
-
-    private fun setUpToolbar() {
-
-        if ((activity as AppCompatActivity).supportActionBar != null) {
-            (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-        }
     }
 
     override fun onPause() {
