@@ -40,10 +40,13 @@ class StepsAdapter(
             super.onBind(position)
 
             val list = stepList[position]
-
+            if (count == 0) {
+                shortDescriptionTextView.text = list.shortDescription
+            } else {
+                val shortDescriptionString = count.toString() + ". " + list.shortDescription
+                shortDescriptionTextView.text = shortDescriptionString
+            }
             count += 1
-            val shortDescriptionString = count.toString() + ". " + list.shortDescription
-            shortDescriptionTextView.text = shortDescriptionString
 
             itemView.setOnClickListener {
                 clickListener.listItemClick(list)

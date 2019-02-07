@@ -21,28 +21,16 @@ class StepsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_steps)
 
         setUpView()
-
-        setUpToolbar()
-
     }
 
     private fun setUpView() {
         viewPager = findViewById(R.id.view_pager)
 
         val steps = intent.getParcelableArrayListExtra<Step>(EXTRA_STEP_LIST)
-        val adapter = StatePageAdapter(supportFragmentManager, steps)
-        viewPager!!.adapter = adapter
-    }
-
-    private fun setUpToolbar() {
-
         val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
 
-        if (supportActionBar != null) {
-            supportActionBar?.title = "Step " + (step.id + 1)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayShowHomeEnabled(true)
-        }
+        val adapter = StatePageAdapter(supportFragmentManager, steps)
+        viewPager!!.adapter = adapter
     }
 
     override fun onSupportNavigateUp(): Boolean {
