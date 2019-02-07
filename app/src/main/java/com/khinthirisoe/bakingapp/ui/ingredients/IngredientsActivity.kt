@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
-import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
+import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
 
 
 class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {

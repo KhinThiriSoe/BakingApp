@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui.steps
+package com.khinthirisoe.bakingapp.ui.steps.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui.steps
+package com.khinthirisoe.bakingapp.ui.steps.view
 
 import android.content.Context
 import android.os.Build
@@ -6,12 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.exoplayer2.ui.PlayerView
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
+import com.khinthirisoe.bakingapp.ui.steps.StepsContract
+import com.khinthirisoe.bakingapp.ui.steps.presenter.StepsPresenter
 
 class StepVideoFragment : Fragment(), StepsContract.View {
 
@@ -30,7 +31,6 @@ class StepVideoFragment : Fragment(), StepsContract.View {
     private var presenter: StepsContract.Presenter? = null
     private lateinit var videoView: PlayerView
     private lateinit var descriptionView: TextView
-    private lateinit var progressBar: ProgressBar
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,20 +45,11 @@ class StepVideoFragment : Fragment(), StepsContract.View {
 
         videoView = view.findViewById(R.id.ep_video_view)
         descriptionView = view.findViewById(R.id.txt_description)
-        progressBar = view.findViewById(R.id.progressBar)
 
         val step = arguments!!.getParcelable<Step>(EXTRA_STEP)
         videoView.player = presenter!!.getPlayer().getPlayerImpl(context!!)
         presenter!!.play(step.videoURL!!)
         descriptionView.text = step.description
-    }
-
-    override fun showProgress() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    override fun hideProgress() {
-        progressBar.visibility = View.GONE
     }
 
     override fun onPause() {

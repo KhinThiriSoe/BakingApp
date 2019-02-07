@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui.steps
+package com.khinthirisoe.bakingapp.ui.steps.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
 
 
-class StepsActivity : AppCompatActivity(){
+class StepsActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_STEP = "extra_step"
@@ -39,7 +39,7 @@ class StepsActivity : AppCompatActivity(){
         val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
 
         if (supportActionBar != null) {
-            supportActionBar?.title = step.shortDescription
+            supportActionBar?.title = "Step " + (step.id + 1)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }

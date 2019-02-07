@@ -1,8 +1,10 @@
-package com.khinthirisoe.bakingapp.ui.steps
+package com.khinthirisoe.bakingapp.ui.steps.presenter
 
+import com.khinthirisoe.bakingapp.ui.steps.StepsContract
 import com.khinthirisoe.bakingapp.ui.steps.player.MediaPlayerImpl
 
-class StepsPresenter(private var view: StepsContract.View?) : StepsContract.Presenter {
+class StepsPresenter(private var view: StepsContract.View?) :
+    StepsContract.Presenter {
 
     private val mediaPlayer = MediaPlayerImpl()
 
@@ -11,10 +13,6 @@ class StepsPresenter(private var view: StepsContract.View?) : StepsContract.Pres
     override fun play(url: String) = mediaPlayer.play(url)
 
     override fun releasePlayer() = mediaPlayer.releasePlayer()
-
-    override fun onAttachView(view: StepsContract.View) {
-        this.view = view
-    }
 
     override fun onDetachView() {
         this.view = null
