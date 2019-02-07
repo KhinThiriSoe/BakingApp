@@ -1,56 +1,53 @@
 package com.khinthirisoe.bakingapp.ui.steps
 
-import android.os.Build
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.exoplayer2.ui.PlayerView
+import androidx.viewpager.widget.ViewPager
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
 
-class StepsActivity : AppCompatActivity(), StepsContract.View {
+
+class StepsActivity : AppCompatActivity(){
 
     companion object {
         const val EXTRA_STEP = "extra_step"
+        const val EXTRA_STEP_LIST = "extra_step_list"
     }
 
-    private lateinit var videoView: PlayerView
-    private lateinit var descriptionView: TextView
-    private lateinit var presenter: StepsContract.Presenter
+    private var viewPager: ViewPager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_steps)
-        init()
+
+        setUpView()
+
+        setUpToolbar()
+
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.deactivate()
+    private fun setUpView() {
+        viewPager = findViewById(R.id.view_pager)
+
+        val steps = intent.getParcelableArrayListExtra<Step>(EXTRA_STEP_LIST)
+        val adapter = StatePageAdapter(supportFragmentManager, steps)
+        viewPager!!.adapter = adapter
     }
 
-    private fun init() {
-        presenter = StepsPresenter(this)
-        videoView = findViewById(R.id.ep_video_view)
-        descriptionView = findViewById(R.id.txt_description)
+    private fun setUpToolbar() {
 
         val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
-        videoView.player = presenter.getPlayer().getPlayerImpl(this)
-        presenter.play(step.videoURL!!)
-        descriptionView.text = step.description
-    }
 
-    override fun onPause() {
-        super.onPause()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            presenter.releasePlayer()
+        if (supportActionBar != null) {
+            supportActionBar?.title = step.shortDescription
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            presenter.releasePlayer()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
+
 }

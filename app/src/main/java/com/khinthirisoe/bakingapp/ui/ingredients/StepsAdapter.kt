@@ -1,6 +1,5 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,6 @@ import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_steps.view.*
 
 class StepsAdapter(
-    private val context: Context,
     private val stepList: MutableList<Step>,
     private val clickListener: StepsAdapter.StepRecyclerViewClickListener
 ) : RecyclerView.Adapter<StepsAdapter.ViewHolder>() {
@@ -50,6 +48,7 @@ class StepsAdapter(
             itemView.setOnClickListener {
                 clickListener.listItemClick(list)
             }
+
         }
     }
 

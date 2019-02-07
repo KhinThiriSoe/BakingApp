@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
@@ -24,10 +23,11 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     private var stepsAdapter: StepsAdapter? = null
 
     private lateinit var bakingName: String
+    private var stepList: MutableList<Step>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ingredients)
+        setContentView(com.khinthirisoe.bakingapp.R.layout.activity_ingredients)
 
         val bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
         bakingName = bakingRecipe.name
@@ -49,8 +49,8 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
     private fun setUpView() {
 
-        ingredientRecyclerView = findViewById(R.id.ingredient_recyclerView)
-        stepRecyclerView = findViewById(R.id.step_recyclerView)
+        ingredientRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.ingredient_recyclerView)
+        stepRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.step_recyclerView)
 
         val mIngredientLayoutManager = LinearLayoutManager(this)
         ingredientRecyclerView.layoutManager = mIngredientLayoutManager
@@ -60,15 +60,21 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     }
 
     private fun configureUI(recipe: Recipe) {
+        stepList = recipe.steps
+
         ingredientsAdapter = IngredientsAdapter(this, recipe.ingredients as MutableList<Ingredient>)
         ingredientRecyclerView.adapter = ingredientsAdapter
 
-        stepsAdapter = StepsAdapter(this, recipe.steps as MutableList<Step>, this)
+        stepsAdapter = StepsAdapter(recipe.steps as MutableList<Step>, this)
         stepRecyclerView.adapter = stepsAdapter
     }
 
     override fun listItemClick(step: Step) {
-        startActivity(Intent(this, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step))
+        startActivity(
+            Intent(this, StepsActivity::class.java)
+                .putExtra(StepsActivity.EXTRA_STEP, step)
+                .putParcelableArrayListExtra(StepsActivity.EXTRA_STEP_LIST, (ArrayList(stepList)))
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {
