@@ -43,6 +43,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <provider
+                android:authorities="com.khinthirisoe.bakingapp"
+                android:name="com.khinthirisoe.bakingapp.data.db.IngredientsProvider"
+                android:exported="false"></provider>
+
+        <service android:name=".ui.BakingWidgetService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>
