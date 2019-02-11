@@ -3,7 +3,6 @@ package com.khinthirisoe.bakingapp.data.db
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.BaseColumns
-import android.provider.BaseColumns._ID
 
 object IngredientsContract {
 
@@ -21,28 +20,29 @@ object IngredientsContract {
 
         companion object {
 
-            val TABLE_NAME = "ingredient"
+            const val TABLE_NAME = "ingredient"
 
-            val COL_NAME = "name"
-            val COL_QUALITY = "quality"
-            val COL_MEASURE = "measure"
+            const val COL_NAME = "name"
+            const val COL_QUALITY = "quality"
+            const val COL_MEASURE = "measure"
+            const val COL_BAKING_ID = "baking_id"
 
             val COLUMNS = arrayOf(
                 arrayOf(
-                    _ID,
-                    TYPE_PRIMARY_KEY_TEXT_UNIQUE
-                ),
-                arrayOf(
-                    COL_NAME,
-                    TYPE_TEXT_NOT_NULL
-                ),
-                arrayOf(
                     COL_QUALITY,
-                    TYPE_TEXT_NOT_NULL
+                    TYPE_TEXT
                 ),
                 arrayOf(
                     COL_MEASURE,
-                    TYPE_TEXT_NOT_NULL
+                    TYPE_TEXT
+                ),
+                arrayOf(
+                    COL_NAME,
+                    TYPE_PRIMARY_KEY_TEXT_UNIQUE
+                ),
+                arrayOf(
+                    COL_BAKING_ID,
+                    TYPE_TEXT
                 )
             )
 

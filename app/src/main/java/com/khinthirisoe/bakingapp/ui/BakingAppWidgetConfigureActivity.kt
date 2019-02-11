@@ -13,9 +13,9 @@ import com.khinthirisoe.bakingapp.R
  * The configuration screen for the [BakingAppWidget] AppWidget.
  */
 class BakingAppWidgetConfigureActivity : Activity() {
-    internal var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
-    internal var mAppWidgetText: EditText
-    internal var mOnClickListener: View.OnClickListener = View.OnClickListener {
+    private var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private lateinit var mAppWidgetText: EditText
+    private var mOnClickListener: View.OnClickListener = View.OnClickListener {
         val context = this@BakingAppWidgetConfigureActivity
 
         // When the button is clicked, store the string locally
@@ -64,8 +64,8 @@ class BakingAppWidgetConfigureActivity : Activity() {
 
     companion object {
 
-        private val PREFS_NAME = "com.khinthirisoe.bakingapp.ui.BakingAppWidget"
-        private val PREF_PREFIX_KEY = "appwidget_"
+        private const val PREFS_NAME = "com.khinthirisoe.bakingapp.ui.BakingAppWidget"
+        private const val PREF_PREFIX_KEY = "appwidget_"
 
         // Write the prefix to the SharedPreferences object for this widget
         internal fun saveTitlePref(context: Context, appWidgetId: Int, text: String) {

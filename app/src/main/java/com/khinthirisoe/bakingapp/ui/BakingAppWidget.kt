@@ -1,10 +1,15 @@
 package com.khinthirisoe.bakingapp.ui
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
+import androidx.core.app.TaskStackBuilder
 import com.khinthirisoe.bakingapp.R
+import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
 
 /**
  * Implementation of App Widget functionality.
@@ -13,9 +18,29 @@ import com.khinthirisoe.bakingapp.R
 class BakingAppWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+            val views = RemoteViews(
+                context.packageName,
+                R.layout.baking_app_widget
+            )
+
+            // click event handler for the title, launches the app when the user clicks on title
+            val titleIntent = Intent(context, IngredientsActivity::class.java)
+            val titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0)
+            views.setOnClickPendingIntent(R.id.widgetTitleLabel, titlePendingIntent)
+
+
+            val intent = Intent(context, BakingWidgetRemoteViewsService::class.java)
+            views.setRemoteAdapter(R.id.widgetListView, intent)
+
+            // template to handle the click listener for each item
+            val clickIntentTemplate = Intent(context, IngredientsActivity::class.java)
+            val clickPendingIntentTemplate = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(clickIntentTemplate)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            views.setPendingIntentTemplate(R.id.widgetListView, clickPendingIntentTemplate)
+
+            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
 
@@ -34,12 +59,20 @@ class BakingAppWidget : AppWidgetProvider() {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+    override fun onReceive(context: Context?, intent: Intent?) {
+        val action = intent?.action
+        if (action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
+            // refresh all your widgets
+            val mgr = AppWidgetManager.getInstance(context)
+            val cn = ComponentName(context, BakingAppWidget::class.java)
+            mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widgetListView)
+        }
+        super.onReceive(context, intent)
+    }
+
     companion object {
 
-        internal fun updateAppWidget(
-            context: Context, appWidgetManager: AppWidgetManager,
-            appWidgetId: Int
-        ) {
+        internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
 
             val widgetText = BakingAppWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
             // Construct the RemoteViews object
@@ -48,6 +81,12 @@ class BakingAppWidget : AppWidgetProvider() {
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+
+        fun sendRefreshBroadcast(context: Context) {
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+            intent.component = ComponentName(context, BakingAppWidget::class.java)
+            context.sendBroadcast(intent)
         }
     }
 }

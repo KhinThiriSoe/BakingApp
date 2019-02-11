@@ -13,8 +13,8 @@ class IngredientsDbHelper(context: Context) : SQLiteOpenHelper(
 
     companion object {
 
-        val DATABASE_VERSION = 1
-        val DATABASE_NAME = "ingredients"
+        const val DATABASE_VERSION = 2
+        const val DATABASE_NAME = "ingredients"
     }
 
     override fun onCreate(db: SQLiteDatabase) {

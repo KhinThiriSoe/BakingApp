@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViewsService;
 
-public class BakingWidgetService extends RemoteViewsService {
+public class BakingWidgetRemoteViewsService extends RemoteViewsService {
     private static final String TAG = "WidgetService";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         Log.d(TAG, "onGetViewFactory: " + "Service called");
-        return new MyWidgetRemoteViewsFactory(this.getApplicationContext(), intent);
+        return new BakingWidgetRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }

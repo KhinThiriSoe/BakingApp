@@ -49,7 +49,7 @@
                 android:name="com.khinthirisoe.bakingapp.data.db.IngredientsProvider"
                 android:exported="false"></provider>
 
-        <service android:name=".ui.BakingWidgetService"
+        <service android:name=".ui.BakingWidgetRemoteViewsService"
                  android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 

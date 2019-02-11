@@ -65,7 +65,6 @@ class IngredientsProvider : ContentProvider() {
                 var rowsInserted = 0
                 try {
                     for (value in values) {
-
                         val _id = db?.insert(Ingredients.TABLE_NAME, null, value)
                         if (_id != (-1).toLong()) {
                             rowsInserted++
@@ -87,21 +86,33 @@ class IngredientsProvider : ContentProvider() {
     override fun insert(@NonNull uri: Uri, contentValues: ContentValues?): Uri? {
         val db = mDbHelper?.writableDatabase
 
-        when (URI_MATCHER.match(uri)) {
+        return when (URI_MATCHER.match(uri)) {
             URI_INGREDIENT -> {
                 val _id = db?.insert(Ingredients.TABLE_NAME, null, contentValues)
                 if (_id != (-1).toLong()) {
                     context!!.contentResolver.notifyChange(uri, null)
                 }
 
-                return Ingredients.buildTodoUriWithId(_id!!)
+                Ingredients.buildTodoUriWithId(_id!!)
             }
-            else -> return null
+            else -> null
         }
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        return 0
+        val db = mDbHelper?.writableDatabase
+        val numDeleted: Int
+        when (URI_MATCHER.match(uri)) {
+            URI_INGREDIENT -> {
+                numDeleted = db!!.delete(
+                    Ingredients.TABLE_NAME, selection, selectionArgs
+                )
+            }
+            else -> throw UnsupportedOperationException("Unknown uri: $uri")
+        }
+
+        context.contentResolver.notifyChange(uri, null)
+        return numDeleted
     }
 
     override fun update(@NonNull uri: Uri, contentValues: ContentValues?, s: String?, strings: Array<String>?): Int {
