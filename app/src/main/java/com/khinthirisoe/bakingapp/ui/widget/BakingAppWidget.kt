@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui
+package com.khinthirisoe.bakingapp.ui.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -7,9 +7,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import androidx.core.app.TaskStackBuilder
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
+import com.khinthirisoe.bakingapp.ui.baking.view.BakingActivity
 
 /**
  * Implementation of App Widget functionality.
@@ -25,7 +24,7 @@ class BakingAppWidget : AppWidgetProvider() {
             )
 
             // click event handler for the title, launches the app when the user clicks on title
-            val titleIntent = Intent(context, IngredientsActivity::class.java)
+            val titleIntent = Intent(context, BakingActivity::class.java)
             val titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0)
             views.setOnClickPendingIntent(R.id.widgetTitleLabel, titlePendingIntent)
 
@@ -34,11 +33,11 @@ class BakingAppWidget : AppWidgetProvider() {
             views.setRemoteAdapter(R.id.widgetListView, intent)
 
             // template to handle the click listener for each item
-            val clickIntentTemplate = Intent(context, IngredientsActivity::class.java)
-            val clickPendingIntentTemplate = TaskStackBuilder.create(context)
-                .addNextIntentWithParentStack(clickIntentTemplate)
-                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-            views.setPendingIntentTemplate(R.id.widgetListView, clickPendingIntentTemplate)
+//            val clickIntentTemplate = Intent(context, IngredientsActivity::class.java)
+//            val clickPendingIntentTemplate = TaskStackBuilder.create(context)
+//                .addNextIntentWithParentStack(clickIntentTemplate)
+//                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+//            views.setPendingIntentTemplate(R.id.widgetListView, clickPendingIntentTemplate)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -47,7 +46,10 @@ class BakingAppWidget : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
-            BakingAppWidgetConfigureActivity.deleteTitlePref(context, appWidgetId)
+            BakingAppWidgetConfigureActivity.deleteTitlePref(
+                context,
+                appWidgetId
+            )
         }
     }
 
@@ -74,7 +76,11 @@ class BakingAppWidget : AppWidgetProvider() {
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
 
-            val widgetText = BakingAppWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
+            val widgetText =
+                BakingAppWidgetConfigureActivity.loadTitlePref(
+                    context,
+                    appWidgetId
+                )
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.baking_app_widget)
             views.setTextViewText(R.id.appwidget_text, widgetText)

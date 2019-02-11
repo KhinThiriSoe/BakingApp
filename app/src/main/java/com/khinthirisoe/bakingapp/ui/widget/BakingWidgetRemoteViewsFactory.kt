@@ -1,32 +1,35 @@
-package com.khinthirisoe.bakingapp.ui
+package com.khinthirisoe.bakingapp.ui.widget
 
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.os.Binder
+import android.os.Build
 import android.widget.AdapterView
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import androidx.annotation.RequiresApi
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.db.IngredientsContract
 
-class BakingWidgetRemoteViewsFactory(private val mContext: Context, intent: Intent) :
+class BakingWidgetRemoteViewsFactory(private val context: Context, private val intent: Intent) :
     RemoteViewsService.RemoteViewsFactory {
-    private var mCursor: Cursor? = null
+    private var cursor: Cursor? = null
 
     override fun onCreate() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDataSetChanged() {
 
-        if (mCursor != null) {
-            mCursor!!.close()
+        if (cursor != null) {
+            cursor!!.close()
         }
 
         val identityToken = Binder.clearCallingIdentity()
         val uri = IngredientsContract.Ingredients.CONTENT_URI
-        mCursor = mContext.contentResolver.query(
+        cursor = context.contentResolver.query(
             uri, null, null, null
         )
 
@@ -35,39 +38,38 @@ class BakingWidgetRemoteViewsFactory(private val mContext: Context, intent: Inte
     }
 
     override fun onDestroy() {
-        if (mCursor != null) {
-            mCursor!!.close()
+        if (cursor != null) {
+            cursor!!.close()
         }
     }
 
     override fun getCount(): Int {
-        return if (mCursor == null) 0 else mCursor!!.count
+        return if (cursor == null) 0 else cursor!!.count
     }
 
     override fun getViewAt(position: Int): RemoteViews? {
         if (position == AdapterView.INVALID_POSITION ||
-            mCursor == null || !mCursor!!.moveToPosition(position)
+            cursor == null || !cursor!!.moveToPosition(position)
         ) {
             return null
         }
 
-        val rv = RemoteViews(mContext.packageName, R.layout.list_baking_app_widget)
+        val rv = RemoteViews(context.packageName, R.layout.list_baking_app_widget)
         rv.setTextViewText(
             R.id.widget_ingredient,
-            mCursor!!.getString(mCursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_NAME))
+            cursor!!.getString(cursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_NAME))
         )
         rv.setTextViewText(
             R.id.widget_quality,
-            mCursor!!.getString(mCursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_QUALITY))
+            cursor!!.getString(cursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_QUALITY))
         )
         rv.setTextViewText(
             R.id.widget_measure,
-            mCursor!!.getString(mCursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_MEASURE))
+            cursor!!.getString(cursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_MEASURE))
         )
 
-//        val fillInIntent = Intent()
-//        fillInIntent.putExtra(BakingAppWidget.EXTRA_LABEL, mCursor!!.getString(1))
-//        rv.setOnClickFillInIntent(R.id.widgetItemContainer, fillInIntent)
+        val fillInIntent = Intent()
+        rv.setOnClickFillInIntent(R.id.widgetItemContainer, fillInIntent)
 
         return rv
     }
@@ -81,7 +83,7 @@ class BakingWidgetRemoteViewsFactory(private val mContext: Context, intent: Inte
     }
 
     override fun getItemId(position: Int): Long {
-        return if (mCursor!!.moveToPosition(position)) mCursor!!.getLong(0) else position.toLong()
+        return if (cursor!!.moveToPosition(position)) cursor!!.getLong(0) else position.toLong()
     }
 
     override fun hasStableIds(): Boolean {

@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui
+package com.khinthirisoe.bakingapp.ui.widget
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -20,11 +20,19 @@ class BakingAppWidgetConfigureActivity : Activity() {
 
         // When the button is clicked, store the string locally
         val widgetText = mAppWidgetText.text.toString()
-        saveTitlePref(context, mAppWidgetId, widgetText)
+        saveTitlePref(
+            context,
+            mAppWidgetId,
+            widgetText
+        )
 
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        BakingAppWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
+        BakingAppWidget.updateAppWidget(
+            context,
+            appWidgetManager,
+            mAppWidgetId
+        )
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
@@ -59,12 +67,17 @@ class BakingAppWidgetConfigureActivity : Activity() {
             return
         }
 
-        mAppWidgetText.setText(loadTitlePref(this@BakingAppWidgetConfigureActivity, mAppWidgetId))
+        mAppWidgetText.setText(
+            loadTitlePref(
+                this@BakingAppWidgetConfigureActivity,
+                mAppWidgetId
+            )
+        )
     }
 
     companion object {
 
-        private const val PREFS_NAME = "com.khinthirisoe.bakingapp.ui.BakingAppWidget"
+        private const val PREFS_NAME = "com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget"
         private const val PREF_PREFIX_KEY = "appwidget_"
 
         // Write the prefix to the SharedPreferences object for this widget

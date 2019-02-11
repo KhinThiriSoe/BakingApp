@@ -10,8 +10,8 @@ import com.khinthirisoe.bakingapp.data.db.repository.IngredientsRepository
 import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
-import com.khinthirisoe.bakingapp.ui.BakingAppWidget
 import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
+import com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget
 
 
 class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
@@ -88,10 +88,13 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
             repository.saveIngredients(recipe.id.toString(), recipe.ingredients)
 
-            BakingAppWidget.sendRefreshBroadcast(this@IngredientsActivity)
+            this@IngredientsActivity.runOnUiThread {
+                BakingAppWidget.sendRefreshBroadcast(this@IngredientsActivity)
+            }
+
 
             ingredientsAdapter =
-                IngredientsAdapter(this@IngredientsActivity, recipe.ingredients as MutableList<Ingredient>)
+                IngredientsAdapter(recipe.ingredients as MutableList<Ingredient>)
             ingredientRecyclerView.adapter = ingredientsAdapter
 
             stepsAdapter = StepsAdapter(recipe.steps as MutableList<Step>, this@IngredientsActivity)
