@@ -9,8 +9,8 @@ import android.widget.AdapterView
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.annotation.RequiresApi
-import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.db.IngredientsContract
+
 
 class BakingWidgetRemoteViewsFactory(private val context: Context, private val intent: Intent) :
     RemoteViewsService.RemoteViewsFactory {
@@ -18,22 +18,26 @@ class BakingWidgetRemoteViewsFactory(private val context: Context, private val i
 
     override fun onCreate() {
 
+        initCursor()
+
+    }
+
+    private fun initCursor() {
+        if (cursor != null) {
+            cursor!!.close()
+        }
+        val identityToken = Binder.clearCallingIdentity()
+
+        cursor = context.contentResolver.query(
+            IngredientsContract.Ingredients.CONTENT_URI, null, null, null, null
+        )
+        Binder.restoreCallingIdentity(identityToken)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onDataSetChanged() {
 
-        if (cursor != null) {
-            cursor!!.close()
-        }
-
-        val identityToken = Binder.clearCallingIdentity()
-        val uri = IngredientsContract.Ingredients.CONTENT_URI
-        cursor = context.contentResolver.query(
-            uri, null, null, null
-        )
-
-        Binder.restoreCallingIdentity(identityToken)
+        initCursor()
 
     }
 
@@ -54,22 +58,22 @@ class BakingWidgetRemoteViewsFactory(private val context: Context, private val i
             return null
         }
 
-        val rv = RemoteViews(context.packageName, R.layout.list_baking_app_widget)
+        val rv = RemoteViews(context.packageName, com.khinthirisoe.bakingapp.R.layout.list_baking_app_widget)
         rv.setTextViewText(
-            R.id.widget_ingredient,
+            com.khinthirisoe.bakingapp.R.id.widget_ingredient,
             cursor!!.getString(cursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_NAME))
         )
         rv.setTextViewText(
-            R.id.widget_quality,
+            com.khinthirisoe.bakingapp.R.id.widget_quality,
             cursor!!.getString(cursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_QUALITY))
         )
         rv.setTextViewText(
-            R.id.widget_measure,
+            com.khinthirisoe.bakingapp.R.id.widget_measure,
             cursor!!.getString(cursor!!.getColumnIndex(IngredientsContract.Ingredients.COL_MEASURE))
         )
 
         val fillInIntent = Intent()
-        rv.setOnClickFillInIntent(R.id.widgetItemContainer, fillInIntent)
+        rv.setOnClickFillInIntent(com.khinthirisoe.bakingapp.R.id.widgetItemContainer, fillInIntent)
 
         return rv
     }

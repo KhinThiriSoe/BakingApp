@@ -5,7 +5,6 @@
                     android:updatePeriodMillis="86400000"
                     android:previewImage="@drawable/baking"
                     android:initialLayout="@layout/baking_app_widget"
-                    android:configure="com.khinthirisoe.bakingapp.ui.widget.BakingAppWidgetConfigureActivity"
                     android:resizeMode="horizontal|vertical"
                     android:widgetCategory="home_screen"
                     android:initialKeyguardLayout="@layout/baking_app_widget">

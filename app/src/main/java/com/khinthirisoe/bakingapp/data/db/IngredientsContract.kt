@@ -25,7 +25,6 @@ object IngredientsContract {
             const val COL_NAME = "name"
             const val COL_QUALITY = "quality"
             const val COL_MEASURE = "measure"
-            const val COL_BAKING_ID = "baking_id"
 
             val COLUMNS = arrayOf(
                 arrayOf(
@@ -39,10 +38,6 @@ object IngredientsContract {
                 arrayOf(
                     COL_NAME,
                     TYPE_PRIMARY_KEY_TEXT_UNIQUE
-                ),
-                arrayOf(
-                    COL_BAKING_ID,
-                    TYPE_TEXT
                 )
             )
 

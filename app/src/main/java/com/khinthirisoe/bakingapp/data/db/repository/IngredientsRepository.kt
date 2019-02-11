@@ -8,14 +8,13 @@ import com.khinthirisoe.bakingapp.data.model.Ingredient
 
 class IngredientsRepository(private val context: Context) {
 
-    fun saveIngredients(bakingId: String, ingredientList: ArrayList<Ingredient>) {
+    fun saveIngredients(ingredientList: ArrayList<Ingredient>) {
         val contentValues = ArrayList<ContentValues>(ingredientList.size)
         for (ingredient in ingredientList) {
             val values = ContentValues(4)
             values.put(Ingredients.COL_QUALITY, ingredient.quantity)
             values.put(Ingredients.COL_MEASURE, ingredient.measure)
             values.put(Ingredients.COL_NAME, ingredient.ingredient)
-            values.put(Ingredients.COL_BAKING_ID, bakingId)
             contentValues.add(values)
         }
         val id = context.contentResolver.bulkInsert(Ingredients.CONTENT_URI, contentValues.toTypedArray())

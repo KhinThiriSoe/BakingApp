@@ -10,6 +10,7 @@ import com.khinthirisoe.bakingapp.data.db.repository.IngredientsRepository
 import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
+import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
 import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
 import com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget
 
@@ -25,6 +26,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     private lateinit var stepRecyclerView: RecyclerView
     private var stepsAdapter: StepsAdapter? = null
     private lateinit var repository: IngredientsRepository
+    private lateinit var pref: AppPreferencesHelper
 
     private var bakingName: String? = null
     private var stepList: MutableList<Step>? = null
@@ -35,6 +37,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         setContentView(com.khinthirisoe.bakingapp.R.layout.activity_ingredients)
 
         repository = IngredientsRepository(this)
+        pref = AppPreferencesHelper(this)
 
         if (intent.hasExtra(EXTRA_BAKING)) {
             bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
@@ -86,12 +89,13 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
             repository.removeIngredient()
 
-            repository.saveIngredients(recipe.id.toString(), recipe.ingredients)
+            repository.saveIngredients(recipe.ingredients)
+
+            pref.recipeName = recipe.name
 
             this@IngredientsActivity.runOnUiThread {
                 BakingAppWidget.sendRefreshBroadcast(this@IngredientsActivity)
             }
-
 
             ingredientsAdapter =
                 IngredientsAdapter(recipe.ingredients as MutableList<Ingredient>)
