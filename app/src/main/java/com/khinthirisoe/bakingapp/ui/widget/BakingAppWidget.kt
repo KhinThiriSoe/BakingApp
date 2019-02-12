@@ -17,15 +17,13 @@ class BakingAppWidget : AppWidgetProvider() {
 
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(
-
                 context.packageName,
                 R.layout.baking_app_widget
-
             )
 
             val pref = AppPreferencesHelper(context)
-            var recipeName : String
-            if (pref.recipeName.isNotEmpty()){
+            var recipeName: String
+            if (pref.recipeName.isNotEmpty()) {
                 recipeName = pref.recipeName
                 views.setTextViewText(R.id.widgetTitleLabel, recipeName)
             }

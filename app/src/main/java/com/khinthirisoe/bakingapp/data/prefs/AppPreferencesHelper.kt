@@ -3,7 +3,9 @@ package com.khinthirisoe.bakingapp.data.prefs
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import javax.inject.Singleton
 
+@Singleton
 class AppPreferencesHelper constructor(context: Context) : PreferencesHelper {
 
     private val mPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -15,6 +17,6 @@ class AppPreferencesHelper constructor(context: Context) : PreferencesHelper {
         }
 
     companion object {
-        private val PREF_KEY_RECIPE_NAME = "recipe_name"
+        private const val PREF_KEY_RECIPE_NAME = "recipe_name"
     }
 }
