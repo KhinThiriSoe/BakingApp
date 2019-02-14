@@ -6,7 +6,7 @@ import android.os.Parcelable
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
@@ -17,7 +17,6 @@ import com.khinthirisoe.bakingapp.ui.baking.BakingContract
 import com.khinthirisoe.bakingapp.ui.base.BaseActivity
 import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
 import javax.inject.Inject
-
 
 class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.BakingRecyclerViewClickListener {
 
@@ -47,11 +46,13 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
 
     private fun initView() {
 
-        bakingRecyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.progressBar)
+        bakingRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.recyclerView)
+        progressBar = findViewById(com.khinthirisoe.bakingapp.R.id.progressBar)
 
-        val mLayoutManager = LinearLayoutManager(this)
-        bakingRecyclerView.layoutManager = mLayoutManager
+        val layoutManager =
+            GridLayoutManager(this, resources.getInteger(R.integer.number_of_grid_items))
+
+        bakingRecyclerView.layoutManager = layoutManager
 
     }
 
@@ -61,7 +62,12 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
     }
 
     override fun listItemClick(baking: Recipe) {
-        startActivity(Intent(this, IngredientsActivity::class.java).putExtra(IngredientsActivity.EXTRA_BAKING, baking as Parcelable))
+        startActivity(
+            Intent(this, IngredientsActivity::class.java).putExtra(
+                IngredientsActivity.EXTRA_BAKING,
+                baking as Parcelable
+            )
+        )
     }
 
     override fun showMessage(message: String) {
