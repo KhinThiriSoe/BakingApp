@@ -11,7 +11,7 @@ data class Recipe(
     @SerializedName("steps") val steps: ArrayList<Step>,
     @SerializedName("servings") val servings: Int,
     @SerializedName("image") var image: String?
-) : Parcelable {
+) : Parcelable{
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

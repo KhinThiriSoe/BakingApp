@@ -3,30 +3,23 @@ package com.khinthirisoe.bakingapp.ui.ingredients
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.khinthirisoe.bakingapp.data.db.repository.IngredientsRepository
-import com.khinthirisoe.bakingapp.data.model.Ingredient
+import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
-import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
 import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
-import com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget
 
 
-class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
+
+
+
+
+class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentInteractionListener {
 
     companion object {
         const val EXTRA_BAKING = "extra_baking"
     }
 
-    private lateinit var ingredientRecyclerView: RecyclerView
-    private var ingredientsAdapter: IngredientsAdapter? = null
-    private lateinit var stepRecyclerView: RecyclerView
-    private var stepsAdapter: StepsAdapter? = null
-    private lateinit var repository: IngredientsRepository
-    private lateinit var pref: AppPreferencesHelper
+    private var ingredientsFragment: IngredientsFragment = IngredientsFragment.newInstance()
 
     private var bakingName: String? = null
     private var stepList: MutableList<Step>? = null
@@ -34,22 +27,17 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.khinthirisoe.bakingapp.R.layout.activity_ingredients)
-
-        repository = IngredientsRepository(this)
-        pref = AppPreferencesHelper(this)
+        setContentView(R.layout.activity_ingredients)
 
         if (intent.hasExtra(EXTRA_BAKING)) {
             bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
             bakingName = bakingRecipe!!.name
+            stepList = bakingRecipe!!.steps
         }
 
+        supportFragmentManager.findFragmentById(R.id.list_selection_fragment) as IngredientsFragment
+
         setUpToolbar()
-
-        setUpView()
-
-        configureUI(bakingRecipe)
-
     }
 
     private fun setUpToolbar() {
@@ -63,50 +51,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         }
     }
 
-    private fun setUpView() {
-
-        ingredientRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.ingredient_recyclerView)
-        stepRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.step_recyclerView)
-
-        val mIngredientLayoutManager = LinearLayoutManager(this)
-        ingredientRecyclerView.layoutManager = mIngredientLayoutManager
-
-        val mLayoutManager = LinearLayoutManager(this)
-        stepRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                stepRecyclerView.context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        stepRecyclerView.layoutManager = mLayoutManager
-    }
-
-    private fun configureUI(recipe: Recipe?) {
-
-        recipe?.apply {
-
-            stepList = recipe.steps
-
-            repository.removeIngredient()
-
-            repository.saveIngredients(recipe.ingredients)
-
-            pref.recipeName = recipe.name
-
-            this@IngredientsActivity.runOnUiThread {
-                BakingAppWidget.sendRefreshBroadcast(this@IngredientsActivity)
-            }
-
-            ingredientsAdapter =
-                IngredientsAdapter(recipe.ingredients as MutableList<Ingredient>)
-            ingredientRecyclerView.adapter = ingredientsAdapter
-
-            stepsAdapter = StepsAdapter(recipe.steps as MutableList<Step>, this@IngredientsActivity)
-            stepRecyclerView.adapter = stepsAdapter
-        }
-    }
-
-    override fun listItemClick(step: Step) {
+    override fun onListItemClicked(step: Step) {
         startActivity(
             Intent(this, StepsActivity::class.java)
                 .putExtra(StepsActivity.EXTRA_STEP, step)

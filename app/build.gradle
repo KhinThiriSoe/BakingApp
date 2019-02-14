@@ -79,6 +79,7 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-reactor-adapter:$reactorAdapterVersion"
 
     implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     kapt "com.google.dagger:dagger-compiler:$daggerCompilerVersion"
 
     implementation "com.google.android.exoplayer:exoplayer:$exoplayerVersion"
