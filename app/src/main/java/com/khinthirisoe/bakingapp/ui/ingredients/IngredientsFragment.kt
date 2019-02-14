@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.db.repository.IngredientsRepository
 import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
@@ -30,10 +31,9 @@ class IngredientsFragment : Fragment(), StepsAdapter.StepRecyclerViewClickListen
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(com.khinthirisoe.bakingapp.R.layout.fragment_ingredients, container, false)
+        val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
 
         repository = IngredientsRepository(context!!)
         pref = AppPreferencesHelper(context!!)

@@ -7,10 +7,7 @@ import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
-
-
-
-
+import com.khinthirisoe.bakingapp.ui.steps.view.StepsFragment
 
 
 class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentInteractionListener {
@@ -54,8 +51,8 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
     override fun onListItemClicked(step: Step) {
         startActivity(
             Intent(this, StepsActivity::class.java)
-                .putExtra(StepsActivity.EXTRA_STEP, step)
-                .putParcelableArrayListExtra(StepsActivity.EXTRA_STEP_LIST, (ArrayList(stepList)))
+                .putExtra(StepsFragment.EXTRA_STEP, step)
+                .putParcelableArrayListExtra(StepsFragment.EXTRA_STEP_LIST, (ArrayList(stepList)))
         )
     }
 
