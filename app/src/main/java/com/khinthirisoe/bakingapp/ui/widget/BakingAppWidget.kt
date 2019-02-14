@@ -11,6 +11,7 @@ import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
 import com.khinthirisoe.bakingapp.ui.baking.view.BakingActivity
 
+
 class BakingAppWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -36,21 +37,29 @@ class BakingAppWidget : AppWidgetProvider() {
             val intent = Intent(context, BakingWidgetRemoteViewsService::class.java)
             views.setRemoteAdapter(R.id.widgetListView, intent)
 
+            appWidgetManager.notifyAppWidgetViewDataChanged(
+                appWidgetIds,
+                R.id.widgetListView
+            )
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
     }
 
     companion object {
 
         fun sendRefreshBroadcast(context: Context) {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-            intent.component = ComponentName(context, BakingAppWidget::class.java)
+            val ids = AppWidgetManager.getInstance(context)
+                .getAppWidgetIds(ComponentName(context, BakingAppWidget::class.java))
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
             context.sendBroadcast(intent)
         }
 
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+
         val action = intent.action
         if (action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
             // refresh all your widgets
@@ -58,7 +67,9 @@ class BakingAppWidget : AppWidgetProvider() {
             val cn = ComponentName(context, BakingAppWidget::class.java)
             mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widgetListView)
         }
+
         super.onReceive(context, intent)
+
     }
 }
 
