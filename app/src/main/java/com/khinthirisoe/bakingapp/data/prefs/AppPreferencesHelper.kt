@@ -16,7 +16,14 @@ class AppPreferencesHelper constructor(context: Context) : PreferencesHelper {
             mPrefs.edit().putString(PREF_KEY_RECIPE_NAME, value).apply()
         }
 
+    override var isLargeScreen: Boolean
+        get() = mPrefs.getBoolean(PREF_KEY_IS_LARGE, false)
+        set(value) {
+            mPrefs.edit().putBoolean(PREF_KEY_IS_LARGE, value).apply()
+        }
+
     companion object {
         private const val PREF_KEY_RECIPE_NAME = "recipe_name"
+        private val PREF_KEY_IS_LARGE = "isLargeScreen"
     }
 }

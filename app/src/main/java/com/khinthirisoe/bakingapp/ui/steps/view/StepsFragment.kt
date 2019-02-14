@@ -9,44 +9,46 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
+import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
+
 
 class StepsFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager
-    private lateinit var pagerAdapter: StepPagerAdapter
+    private var pagerAdapter: StepPagerAdapter? = null
     private lateinit var tabLayout: TabLayout
+
+    private var preferencesHelper: AppPreferencesHelper? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_steps, container, false)
 
-        setUpView(view)
+        preferencesHelper = AppPreferencesHelper(context!!)
 
-        configureUI()
+        viewPager = view.findViewById<ViewPager>(R.id.viewPager)
+        tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
 
-        return view
-    }
 
-    private fun setUpView(view: View) {
+        val stepList = arguments!!.getParcelableArrayList<Step>(EXTRA_STEP_LIST)
+        val step = arguments!!.getParcelable<Step>(EXTRA_STEP)
 
-        viewPager = view.findViewById(R.id.viewPager)
-        tabLayout = view.findViewById(R.id.tabLayout)
-    }
+        if (preferencesHelper!!.isLargeScreen) {
+            if (pagerAdapter == null) {
+                pagerAdapter = StepPagerAdapter(childFragmentManager, stepList)
+                viewPager.adapter = pagerAdapter
+                viewPager.currentItem = step.id
+            }
 
-    private fun configureUI() {
-
-        val bundle = activity!!.intent.extras
-        if (bundle != null) {
-            val stepList = bundle.getParcelableArrayList<Step>(EXTRA_STEP_LIST)
-            val step = bundle.getParcelable<Step>(EXTRA_STEP)
-
+        } else {
             pagerAdapter = StepPagerAdapter(activity!!.supportFragmentManager, stepList)
-
             viewPager.adapter = pagerAdapter
             viewPager.currentItem = step.id
             tabLayout.setupWithViewPager(viewPager)
 
         }
+
+        return view
     }
 
     companion object {
@@ -55,8 +57,13 @@ class StepsFragment : Fragment() {
         const val EXTRA_STEP_LIST = "extra_step_list"
 
         @JvmStatic
-        fun newInstance(): StepsFragment {
-            return StepsFragment()
+        fun newInstance(list: ArrayList<Step>, step: Step): StepsFragment {
+            val fragment = StepsFragment()
+            val args = Bundle()
+            args.putParcelable(EXTRA_STEP, step)
+            args.putParcelableArrayList(EXTRA_STEP_LIST, list)
+            fragment.arguments = args
+            return fragment
         }
     }
 }
