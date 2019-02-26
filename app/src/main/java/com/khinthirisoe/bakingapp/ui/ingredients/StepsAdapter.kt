@@ -1,6 +1,5 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +10,7 @@ import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_steps.view.*
 
 class StepsAdapter(
-    private val context: Context,
-    private val stepList: MutableList<Step>,
+    private var steps: MutableList<Step>?,
     private val clickListener: StepsAdapter.StepRecyclerViewClickListener
 ) : RecyclerView.Adapter<StepsAdapter.ViewHolder>() {
 
@@ -27,11 +25,18 @@ class StepsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (stepList.isNotEmpty() && stepList.size > 0) {
-            stepList.size
+
+        return if (steps != null && steps!!.size > 0) {
+            steps!!.size
         } else {
             0
         }
+    }
+
+    fun setSteps(steps: MutableList<Step>) {
+
+        this.steps = steps
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
@@ -41,14 +46,14 @@ class StepsAdapter(
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            val list = stepList[position]
+            val step = steps!![position]
 
             count += 1
-            val shortDescriptionString = count.toString() + ". " + list.shortDescription
+            val shortDescriptionString = count.toString() + ". " + step.shortDescription
             shortDescriptionTextView.text = shortDescriptionString
 
             itemView.setOnClickListener {
-                clickListener.listItemClick(list)
+                clickListener.listItemClick(step)
             }
         }
     }

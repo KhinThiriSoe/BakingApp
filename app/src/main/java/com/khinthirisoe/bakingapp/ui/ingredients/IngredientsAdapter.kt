@@ -1,6 +1,5 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +10,7 @@ import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_ingredients.view.*
 
 class IngredientsAdapter(
-    private val context: Context,
-    private val ingredientList: MutableList<Ingredient>
+    private var ingredients: MutableList<Ingredient>?
 ) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
@@ -25,11 +23,18 @@ class IngredientsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (ingredientList.isNotEmpty() && ingredientList.size > 0) {
-            ingredientList.size
+
+        return if (ingredients != null && ingredients!!.size > 0) {
+            ingredients!!.size
         } else {
             0
         }
+    }
+
+    fun setIngredients(ingredients: ArrayList<Ingredient>) {
+
+        this.ingredients = ingredients
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
@@ -39,7 +44,7 @@ class IngredientsAdapter(
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            val ingredient = ingredientList[position]
+            val ingredient = ingredients!![position]
             val ingredientString = ingredient.ingredient + " " + ingredient.quantity + " " + ingredient.measure
 
             ingredientTextView.text = ingredientString

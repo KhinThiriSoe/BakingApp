@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
-import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
@@ -57,13 +56,18 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
         val stepLayoutManager = LinearLayoutManager(this)
         stepRecyclerView.layoutManager = stepLayoutManager
+
+        ingredientsAdapter = IngredientsAdapter(null)
+        stepsAdapter = StepsAdapter(null, this)
+
     }
 
     private fun configureUI(recipe: Recipe) {
-        ingredientsAdapter = IngredientsAdapter(this, recipe.ingredients as MutableList<Ingredient>)
+
+        ingredientsAdapter?.setIngredients(recipe.ingredients)
         ingredientRecyclerView.adapter = ingredientsAdapter
 
-        stepsAdapter = StepsAdapter(this, recipe.steps as MutableList<Step>, this)
+        stepsAdapter?.setSteps(recipe.steps)
         stepRecyclerView.adapter = stepsAdapter
     }
 
