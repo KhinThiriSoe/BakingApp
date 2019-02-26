@@ -4,17 +4,18 @@ import com.khinthirisoe.bakingapp.ui.steps.player.MediaPlayer
 
 interface StepsContract {
 
-  interface Presenter {
+    interface Presenter {
 
-    fun deactivate()
+        fun deactivate()
 
-    fun getPlayer(): MediaPlayer
+        fun getPlayer(): MediaPlayer
 
-    fun play(url: String)
+        fun play(url: String)
 
-    fun releasePlayer()
+        fun releasePlayer()
 
-  }
+    }
 
-  interface View
+    interface View
+
 }

@@ -10,4 +10,5 @@ interface MediaPlayer {
     fun getPlayerImpl(context: Context): ExoPlayer
 
     fun releasePlayer()
+
 }

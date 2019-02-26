@@ -5,16 +5,16 @@ import java.lang.ref.WeakReference
 
 class StepsPresenter(steps: StepsContract.View) : StepsContract.Presenter {
 
-  private val mediaPlayer = MediaPlayerImpl()
+    private val mediaPlayer = MediaPlayerImpl()
 
-  private val view = WeakReference(steps)
+    private val view = WeakReference(steps)
 
-  override fun deactivate() {
-  }
+    override fun deactivate() {
+    }
 
-  override fun getPlayer() = mediaPlayer
+    override fun getPlayer() = mediaPlayer
 
-  override fun play(url: String) = mediaPlayer.play(url)
+    override fun play(url: String) = mediaPlayer.play(url)
 
-  override fun releasePlayer() = mediaPlayer.releasePlayer()
+    override fun releasePlayer() = mediaPlayer.releasePlayer()
 }
