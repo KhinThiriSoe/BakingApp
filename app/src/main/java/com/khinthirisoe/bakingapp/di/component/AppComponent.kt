@@ -20,4 +20,5 @@ interface AppComponent {
     fun app(): App
 
     fun apiService(): ApiService
+
 }

@@ -27,4 +27,5 @@ class ActivityModule(private val activity: Activity) {
 
     @Provides
     fun bakingPresenter(repository: BakingRepository): BakingContract.Presenter = BakingPresenter(repository)
+
 }

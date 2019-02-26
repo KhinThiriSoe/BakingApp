@@ -54,10 +54,12 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
         val layoutManager = LinearLayoutManager(this)
         bakingRecyclerView.layoutManager = layoutManager
 
+        bakingAdapter = BakingAdapter(this, null, this)
+
     }
 
     override fun showBakingLists(recipes: ArrayList<Recipe>) {
-        bakingAdapter = BakingAdapter(this, recipes as MutableList<Recipe>, this)
+        bakingAdapter?.setRecipes(recipes)
         bakingRecyclerView.adapter = bakingAdapter
     }
 

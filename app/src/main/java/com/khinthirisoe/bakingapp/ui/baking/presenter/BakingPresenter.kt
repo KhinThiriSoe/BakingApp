@@ -53,4 +53,5 @@ constructor(var repository: BakingRepository) : BakingContract.Presenter {
         disposable?.clear()
         this.view = null
     }
+
 }

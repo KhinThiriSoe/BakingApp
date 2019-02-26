@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.list_baking.view.*
 
 class BakingAdapter(
     private val context: Context,
-    private val list: MutableList<Recipe>,
+    private var recipes: MutableList<Recipe>?,
     private val clickListener: BakingRecyclerViewClickListener
 ) :
     RecyclerView.Adapter<BakingAdapter.ViewHolder>() {
@@ -26,11 +26,17 @@ class BakingAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (list.isNotEmpty() && list.size > 0) {
-            list.size
+
+        return if (recipes != null && recipes!!.size > 0) {
+            recipes!!.size
         } else {
             0
         }
+    }
+
+    fun setRecipes(recipes: ArrayList<Recipe>) {
+        this.recipes = recipes
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
@@ -42,14 +48,14 @@ class BakingAdapter(
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            val list = list[position]
+            val recipe = recipes!![position]
 
-            setUpUI(list)
+            setUpUI(recipe)
 
             bakingImageView.setImageDrawable(context.resources.getDrawable(getImages(position)))
 
             itemView.setOnClickListener {
-                clickListener.listItemClick(list)
+                clickListener.listItemClick(recipe)
             }
 
         }
@@ -71,4 +77,5 @@ class BakingAdapter(
     interface BakingRecyclerViewClickListener {
         fun listItemClick(baking: Recipe)
     }
+    
 }
