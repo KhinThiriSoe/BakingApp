@@ -28,7 +28,10 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
     private var bakingAdapter: BakingAdapter? = null
 
     override fun setupComponent(appComponent: AppComponent) {
-        val component = DaggerActivityComponent.builder().appComponent(appComponent).activityModule(ActivityModule(this)).build()
+        val component = DaggerActivityComponent.builder()
+            .appComponent(appComponent)
+            .activityModule(ActivityModule(this))
+            .build()
         component.inject(this)
 
         presenter.onAttachView(this)
