@@ -28,8 +28,7 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
     private var bakingAdapter: BakingAdapter? = null
 
     override fun setupComponent(appComponent: AppComponent) {
-        val component =
-            DaggerActivityComponent.builder().appComponent(appComponent).activityModule(ActivityModule(this)).build()
+        val component = DaggerActivityComponent.builder().appComponent(appComponent).activityModule(ActivityModule(this)).build()
         component.inject(this)
 
         presenter.onAttachView(this)
@@ -49,13 +48,13 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
         bakingRecyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
 
-        val mLayoutManager = LinearLayoutManager(this)
-        bakingRecyclerView.layoutManager = mLayoutManager
+        val layoutManager = LinearLayoutManager(this)
+        bakingRecyclerView.layoutManager = layoutManager
 
     }
 
-    override fun showBakingLists(list: ArrayList<Recipe>) {
-        bakingAdapter = BakingAdapter(this, list as MutableList<Recipe>, this)
+    override fun showBakingLists(recipes: ArrayList<Recipe>) {
+        bakingAdapter = BakingAdapter(this, recipes as MutableList<Recipe>, this)
         bakingRecyclerView.adapter = bakingAdapter
     }
 

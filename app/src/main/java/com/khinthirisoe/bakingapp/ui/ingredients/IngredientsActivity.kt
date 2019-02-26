@@ -52,11 +52,11 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         ingredientRecyclerView = findViewById(R.id.ingredient_recyclerView)
         stepRecyclerView = findViewById(R.id.step_recyclerView)
 
-        val mIngredientLayoutManager = LinearLayoutManager(this)
-        ingredientRecyclerView.layoutManager = mIngredientLayoutManager
+        val ingredientLayoutManager = LinearLayoutManager(this)
+        ingredientRecyclerView.layoutManager = ingredientLayoutManager
 
-        val mLayoutManager = LinearLayoutManager(this)
-        stepRecyclerView.layoutManager = mLayoutManager
+        val stepLayoutManager = LinearLayoutManager(this)
+        stepRecyclerView.layoutManager = stepLayoutManager
     }
 
     private fun configureUI(recipe: Recipe) {
