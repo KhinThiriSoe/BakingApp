@@ -8,7 +8,7 @@ interface BakingContract {
 
     interface View : BaseView {
 
-        fun showBakingLists(list: ArrayList<Recipe>)
+        fun showBakingLists(recipes: ArrayList<Recipe>)
 
         fun showMessage(message: String)
     }
