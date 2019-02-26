@@ -8,4 +8,5 @@ interface ApiService {
 
     @GET(ApiUrl.BAKING_RECIPES)
     fun getBakingRecipes(): Single<ArrayList<Recipe>>
+
 }
