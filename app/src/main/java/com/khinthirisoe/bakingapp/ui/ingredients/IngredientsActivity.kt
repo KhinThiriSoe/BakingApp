@@ -1,6 +1,5 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,7 +66,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     }
 
     override fun listItemClick(step: Step) {
-        startActivity(Intent(this, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step))
+        startActivity(StepsActivity.createIntent(this, step))
     }
 
     override fun onSupportNavigateUp(): Boolean {

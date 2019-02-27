@@ -40,6 +40,7 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
         initView()
 
         presenter.fetchBakingRecipes()
+
     }
 
     private fun initView() {
