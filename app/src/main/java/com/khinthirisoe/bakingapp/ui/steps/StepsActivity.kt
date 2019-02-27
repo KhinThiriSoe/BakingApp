@@ -3,9 +3,9 @@ package com.khinthirisoe.bakingapp.ui.steps
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.exoplayer2.ui.PlayerView
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
+import kotlinx.android.synthetic.main.activity_steps.*
 
 class StepsActivity : AppCompatActivity(), StepsContract.View {
 
@@ -13,7 +13,6 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
         const val EXTRA_STEP = "extra_step"
     }
 
-    private lateinit var videoView: PlayerView
     private lateinit var presenter: StepsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +28,9 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
 
     private fun init() {
         presenter = StepsPresenter(this)
-        videoView = findViewById(R.id.ep_video_view)
 
         val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
-        videoView.player = presenter.getPlayer().getPlayerImpl(this)
+        ep_video_view.player = presenter.getPlayer().getPlayerImpl(this)
         presenter.play(videoUrl.videoURL!!)
     }
 

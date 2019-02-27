@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
+import kotlinx.android.synthetic.main.activity_ingredients.*
 
 
 class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
@@ -17,9 +17,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         const val EXTRA_BAKING = "extra_baking"
     }
 
-    private lateinit var ingredientRecyclerView: RecyclerView
     private var ingredientsAdapter: IngredientsAdapter? = null
-    private lateinit var stepRecyclerView: RecyclerView
     private var stepsAdapter: StepsAdapter? = null
 
     private lateinit var bakingName: String
@@ -48,14 +46,11 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
     private fun setUpView() {
 
-        ingredientRecyclerView = findViewById(R.id.ingredient_recyclerView)
-        stepRecyclerView = findViewById(R.id.step_recyclerView)
-
         val ingredientLayoutManager = LinearLayoutManager(this)
-        ingredientRecyclerView.layoutManager = ingredientLayoutManager
+        ingredient_recyclerView.layoutManager = ingredientLayoutManager
 
         val stepLayoutManager = LinearLayoutManager(this)
-        stepRecyclerView.layoutManager = stepLayoutManager
+        step_recyclerView.layoutManager = stepLayoutManager
 
         ingredientsAdapter = IngredientsAdapter(null)
         stepsAdapter = StepsAdapter(null, this)
@@ -65,10 +60,10 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     private fun configureUI(recipe: Recipe) {
 
         ingredientsAdapter?.setIngredients(recipe.ingredients)
-        ingredientRecyclerView.adapter = ingredientsAdapter
+        ingredient_recyclerView.adapter = ingredientsAdapter
 
         stepsAdapter?.setSteps(recipe.steps)
-        stepRecyclerView.adapter = stepsAdapter
+        step_recyclerView.adapter = stepsAdapter
     }
 
     override fun listItemClick(step: Step) {

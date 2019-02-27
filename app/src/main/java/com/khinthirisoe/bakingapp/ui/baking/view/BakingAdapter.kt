@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.list_baking.view.*
 class BakingAdapter(
     private val context: Context,
     private var recipes: MutableList<Recipe>?,
-    private val clickListener: BakingRecyclerViewClickListener) : RecyclerView.Adapter<BakingAdapter.ViewHolder>() {
+    private val clickListener: BakingRecyclerViewClickListener
+) : RecyclerView.Adapter<BakingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.list_baking))
@@ -39,10 +40,6 @@ class BakingAdapter(
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-        private var bakingImageView = itemView.img_baking
-        private var servingTextView = itemView.txt_no_of_serving
-        private var bakingName = itemView.txt_baking_name
-
         override fun onBind(position: Int) {
             super.onBind(position)
 
@@ -50,7 +47,7 @@ class BakingAdapter(
 
             setUpUI(recipe)
 
-            bakingImageView.setImageDrawable(context.resources.getDrawable(getImages(position)))
+            itemView.img_baking.setImageDrawable(context.resources.getDrawable(getImages(position)))
 
             itemView.setOnClickListener {
                 clickListener.listItemClick(recipe)
@@ -59,8 +56,8 @@ class BakingAdapter(
         }
 
         private fun setUpUI(baking: Recipe) {
-            servingTextView.text = baking.servings.toString()
-            bakingName.text = baking.name
+            itemView.txt_no_of_serving.text = baking.servings.toString()
+            itemView.txt_baking_name.text = baking.name
         }
 
         private fun getImages(position: Int): Int {

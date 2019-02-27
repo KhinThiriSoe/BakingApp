@@ -37,15 +37,13 @@ class IngredientsAdapter(
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-        private val ingredientTextView = itemView.txt_ingredient
-
         override fun onBind(position: Int) {
             super.onBind(position)
 
             val ingredient = ingredients!![position]
             val ingredientString = ingredient.ingredient + " " + ingredient.quantity + " " + ingredient.measure
 
-            ingredientTextView.text = ingredientString
+            itemView.txt_ingredient.text = ingredientString
 
         }
     }

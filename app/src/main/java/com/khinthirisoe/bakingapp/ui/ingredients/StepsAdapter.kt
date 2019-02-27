@@ -40,8 +40,6 @@ class StepsAdapter(
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-        private val shortDescriptionTextView = itemView.txt_short_description
-
         override fun onBind(position: Int) {
             super.onBind(position)
 
@@ -49,7 +47,7 @@ class StepsAdapter(
 
             count += 1
             val shortDescriptionString = count.toString() + ". " + step.shortDescription
-            shortDescriptionTextView.text = shortDescriptionString
+            itemView.txt_short_description.text = shortDescriptionString
 
             itemView.setOnClickListener {
                 clickListener.listItemClick(step)
