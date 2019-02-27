@@ -13,9 +13,7 @@ import kotlinx.android.synthetic.main.list_baking.view.*
 class BakingAdapter(
     private val context: Context,
     private var recipes: MutableList<Recipe>?,
-    private val clickListener: BakingRecyclerViewClickListener
-) :
-    RecyclerView.Adapter<BakingAdapter.ViewHolder>() {
+    private val clickListener: BakingRecyclerViewClickListener) : RecyclerView.Adapter<BakingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.list_baking))
@@ -77,5 +75,5 @@ class BakingAdapter(
     interface BakingRecyclerViewClickListener {
         fun listItemClick(baking: Recipe)
     }
-    
+
 }

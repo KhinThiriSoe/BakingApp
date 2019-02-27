@@ -11,8 +11,7 @@ import kotlinx.android.synthetic.main.list_steps.view.*
 
 class StepsAdapter(
     private var steps: MutableList<Step>?,
-    private val clickListener: StepsAdapter.StepRecyclerViewClickListener
-) : RecyclerView.Adapter<StepsAdapter.ViewHolder>() {
+    private val clickListener: StepsAdapter.StepRecyclerViewClickListener) : RecyclerView.Adapter<StepsAdapter.ViewHolder>() {
 
     var count = 0
 

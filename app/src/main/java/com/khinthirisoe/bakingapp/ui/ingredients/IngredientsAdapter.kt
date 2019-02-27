@@ -10,9 +10,7 @@ import com.khinthirisoe.bakingapp.ui.base.inflate
 import kotlinx.android.synthetic.main.list_ingredients.view.*
 
 class IngredientsAdapter(
-    private var ingredients: MutableList<Ingredient>?
-) :
-    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+    private var ingredients: MutableList<Ingredient>?) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.list_ingredients))
