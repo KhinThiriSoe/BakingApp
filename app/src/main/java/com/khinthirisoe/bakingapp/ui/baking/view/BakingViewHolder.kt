@@ -17,12 +17,15 @@ class BakingViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
     }
 
-    fun getImages(position: Int): Int {
+    companion object {
 
-        val bakingImages =
-            arrayOf(R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake)
+        fun getImages(position: Int): Int {
 
-        return bakingImages[position]
+            val bakingImages =
+                arrayOf(R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake)
+
+            return bakingImages[position]
+        }
     }
 }
 

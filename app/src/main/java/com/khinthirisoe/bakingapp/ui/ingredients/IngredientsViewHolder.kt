@@ -9,7 +9,7 @@ class IngredientsViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
     fun onBind(ingredient: Ingredient) {
 
-        val ingredientString = ingredient.ingredient + " " + ingredient.quantity + " " + ingredient.measure
+        val ingredientString = "${ingredient.ingredient} ${ingredient.quantity} ${ingredient.measure}"
         itemView.txt_ingredient.text = ingredientString
     }
 

@@ -20,8 +20,6 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
     private var stepsAdapter: StepsAdapter? = null
     private var bakingRecipe: Recipe? = null
 
-    private lateinit var bakingName: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
