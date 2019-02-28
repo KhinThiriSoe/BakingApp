@@ -26,15 +26,10 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_steps)
 
-        initView()
+        init()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.deactivate()
-    }
-
-    private fun initView() {
+    private fun init() {
         presenter = StepsPresenter(this)
 
         val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
