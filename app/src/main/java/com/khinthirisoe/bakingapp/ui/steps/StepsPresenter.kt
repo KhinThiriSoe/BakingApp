@@ -2,7 +2,17 @@ package com.khinthirisoe.bakingapp.ui.steps
 
 import com.khinthirisoe.bakingapp.ui.steps.player.MediaPlayerImpl
 
-class StepsPresenter(steps: StepsContract.View) : StepsContract.Presenter {
+class StepsPresenter : StepsContract.Presenter {
+
+    private var view: StepsContract.View? = null
+
+    override fun onAttachView(view: StepsContract.View) {
+        this.view = view
+    }
+
+    override fun onDetachView() {
+        this.view = null
+    }
 
     private val mediaPlayer = MediaPlayerImpl()
 

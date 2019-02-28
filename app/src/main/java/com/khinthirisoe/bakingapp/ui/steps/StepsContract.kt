@@ -1,10 +1,12 @@
 package com.khinthirisoe.bakingapp.ui.steps
 
+import com.khinthirisoe.bakingapp.ui.base.BasePresenter
+import com.khinthirisoe.bakingapp.ui.base.BaseView
 import com.khinthirisoe.bakingapp.ui.steps.player.MediaPlayer
 
 interface StepsContract {
 
-    interface Presenter {
+    interface Presenter : BasePresenter<StepsContract.View> {
 
         fun getPlayer(): MediaPlayer
 
@@ -14,6 +16,6 @@ interface StepsContract {
 
     }
 
-    interface View
+    interface View: BaseView
 
 }

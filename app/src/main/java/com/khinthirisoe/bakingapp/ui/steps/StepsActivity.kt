@@ -30,12 +30,20 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
     }
 
     private fun init() {
-        presenter = StepsPresenter(this)
+        presenter = StepsPresenter()
 
         val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
         ep_video_view.player = presenter.getPlayer().getPlayerImpl(this)
         presenter.play(videoUrl.videoURL!!)
     }
+
+    override fun showProgress() {
+
+    }
+
+    override fun hideProgress() {
+    }
+
 
     override fun onPause() {
         super.onPause()
