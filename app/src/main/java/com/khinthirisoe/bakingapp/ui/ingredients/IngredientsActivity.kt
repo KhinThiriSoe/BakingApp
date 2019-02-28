@@ -18,6 +18,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
     private var ingredientsAdapter: IngredientsAdapter? = null
     private var stepsAdapter: StepsAdapter? = null
+    private var bakingRecipe: Recipe? = null
 
     private lateinit var bakingName: String
 
@@ -25,16 +26,9 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
 
-        val bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
-        bakingName = bakingRecipe.name
+        bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
 
         initView()
-
-        ingredientsAdapter?.setIngredients(bakingRecipe.ingredients)
-        ingredient_recyclerView.adapter = ingredientsAdapter
-
-        stepsAdapter?.setSteps(bakingRecipe.steps)
-        step_recyclerView.adapter = stepsAdapter
 
     }
 
@@ -50,7 +44,7 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
     private fun setUpToolbar() {
         if (supportActionBar != null) {
-            supportActionBar?.title = bakingName
+            supportActionBar?.title = bakingRecipe!!.name
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }
@@ -62,6 +56,9 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
         ingredientsAdapter = IngredientsAdapter(null)
 
+        ingredientsAdapter?.setIngredients(bakingRecipe!!.ingredients)
+        ingredient_recyclerView.adapter = ingredientsAdapter
+
     }
 
     private fun setUpSteps() {
@@ -70,6 +67,10 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         step_recyclerView.layoutManager = stepLayoutManager
 
         stepsAdapter = StepsAdapter(null, this)
+
+
+        stepsAdapter?.setSteps(bakingRecipe!!.steps)
+        step_recyclerView.adapter = stepsAdapter
     }
 
     override fun listItemClick(step: Step) {

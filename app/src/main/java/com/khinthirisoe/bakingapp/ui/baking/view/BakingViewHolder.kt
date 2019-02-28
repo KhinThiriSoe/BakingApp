@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.list_baking.view.*
 
 class BakingViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-    fun configureUI(baking: Recipe, position: Int) {
+    fun onBind(baking: Recipe, position: Int) {
 
         itemView.txt_no_of_serving.text = baking.servings.toString()
         itemView.txt_baking_name.text = baking.name

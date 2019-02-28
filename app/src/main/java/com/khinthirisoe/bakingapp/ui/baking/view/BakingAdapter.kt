@@ -18,7 +18,7 @@ class BakingAdapter(
 
     override fun onBindViewHolder(holder: BakingViewHolder, position: Int) {
 
-        holder.configureUI(recipes!![position], position)
+        holder.onBind(recipes!![position], position)
 
         holder.itemView.setOnClickListener {
             clickListener.listItemClick(recipes!![position])

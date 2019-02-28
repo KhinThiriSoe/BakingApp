@@ -17,7 +17,7 @@ class StepsAdapter(
 
     override fun onBindViewHolder(holder: StepsViewHolder, position: Int) {
 
-        holder.configureUI(steps!![position], position)
+        holder.onBind(steps!![position], position)
 
         holder.itemView.setOnClickListener {
             clickListener.listItemClick(steps!![position])

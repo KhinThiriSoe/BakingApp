@@ -15,7 +15,7 @@ class IngredientsAdapter(
     }
 
     override fun onBindViewHolder(holder: IngredientsViewHolder, position: Int) {
-        holder.configureUI(ingredients!![position])
+        holder.onBind(ingredients!![position])
     }
 
     override fun getItemCount(): Int {

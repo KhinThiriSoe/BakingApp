@@ -8,9 +8,9 @@ import kotlinx.android.synthetic.main.list_steps.view.*
 
 class StepsViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-    fun configureUI(step: Step, position: Int) {
+    fun onBind(step: Step, position: Int) {
 
-        val shortDescriptionString = position.toString() + ". " + step.shortDescription
+        val shortDescriptionString = (position + 1).toString() + ". " + step.shortDescription
         itemView.txt_short_description.text = shortDescriptionString
     }
 
