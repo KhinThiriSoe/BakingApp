@@ -28,11 +28,24 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         val bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
         bakingName = bakingRecipe.name
 
+        initView()
+
+        ingredientsAdapter?.setIngredients(bakingRecipe.ingredients)
+        ingredient_recyclerView.adapter = ingredientsAdapter
+
+        stepsAdapter?.setSteps(bakingRecipe.steps)
+        step_recyclerView.adapter = stepsAdapter
+
+    }
+
+    private fun initView() {
+
         setUpToolbar()
 
-        setUpView()
+        setupIngredients()
 
-        configureUI(bakingRecipe)
+        setUpSteps()
+
     }
 
     private fun setUpToolbar() {
@@ -43,26 +56,20 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         }
     }
 
-    private fun setUpView() {
-
+    private fun setupIngredients() {
         val ingredientLayoutManager = LinearLayoutManager(this)
         ingredient_recyclerView.layoutManager = ingredientLayoutManager
+
+        ingredientsAdapter = IngredientsAdapter(null)
+
+    }
+
+    private fun setUpSteps() {
 
         val stepLayoutManager = LinearLayoutManager(this)
         step_recyclerView.layoutManager = stepLayoutManager
 
-        ingredientsAdapter = IngredientsAdapter(null)
         stepsAdapter = StepsAdapter(null, this)
-
-    }
-
-    private fun configureUI(recipe: Recipe) {
-
-        ingredientsAdapter?.setIngredients(recipe.ingredients)
-        ingredient_recyclerView.adapter = ingredientsAdapter
-
-        stepsAdapter?.setSteps(recipe.steps)
-        step_recyclerView.adapter = stepsAdapter
     }
 
     override fun listItemClick(step: Step) {

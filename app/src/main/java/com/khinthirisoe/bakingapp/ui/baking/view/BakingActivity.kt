@@ -15,7 +15,6 @@ import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
 import kotlinx.android.synthetic.main.activity_baking.*
 import javax.inject.Inject
 
-
 class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.BakingRecyclerViewClickListener {
 
     @Inject
@@ -48,7 +47,7 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
         val layoutManager = LinearLayoutManager(this)
         baking_recyclerView.layoutManager = layoutManager
 
-        bakingAdapter = BakingAdapter(this, null, this)
+        bakingAdapter = BakingAdapter(null, this)
 
     }
 
