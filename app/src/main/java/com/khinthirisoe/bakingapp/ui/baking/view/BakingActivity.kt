@@ -28,8 +28,6 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
             .activityModule(ActivityModule(this))
             .build()
         component.inject(this)
-
-        presenter.onAttachView(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,5 +68,15 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
 
     override fun hideProgress() {
         progressBar.visibility = View.GONE
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.onAttachView(this)
+    }
+
+    override fun onDestroy() {
+        presenter.onDetachView()
+        super.onDestroy()
     }
 }

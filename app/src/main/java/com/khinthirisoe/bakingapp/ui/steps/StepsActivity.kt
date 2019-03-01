@@ -30,6 +30,7 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
     }
 
     private fun init() {
+
         presenter = StepsPresenter()
 
         val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
@@ -38,12 +39,12 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
     }
 
     override fun showProgress() {
-
+        // show progress bar
     }
 
     override fun hideProgress() {
+        // hide progress bar
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -57,5 +58,15 @@ class StepsActivity : AppCompatActivity(), StepsContract.View {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             presenter.releasePlayer()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.onAttachView(this)
+    }
+
+    override fun onDestroy() {
+        presenter.onDetachView()
+        super.onDestroy()
     }
 }
