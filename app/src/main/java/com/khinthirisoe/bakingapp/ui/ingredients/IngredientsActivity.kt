@@ -1,5 +1,7 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,10 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
 
     companion object {
         const val EXTRA_BAKING = "extra_baking"
+
+        fun createIntent(context: Context, recipe: Recipe): Intent {
+            return Intent(context, IngredientsActivity::class.java).putExtra(EXTRA_BAKING, recipe)
+        }
     }
 
     private var ingredientsAdapter: IngredientsAdapter? = null

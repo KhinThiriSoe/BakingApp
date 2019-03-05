@@ -40,7 +40,7 @@ class BakingAdapter(
     }
 
     interface BakingRecyclerViewClickListener {
-        fun listItemClick(baking: Recipe)
+        fun listItemClick(recipe: Recipe)
     }
 
 }

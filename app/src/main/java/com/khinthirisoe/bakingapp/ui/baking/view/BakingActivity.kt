@@ -1,6 +1,5 @@
 package com.khinthirisoe.bakingapp.ui.baking.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -54,8 +53,8 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
         baking_recyclerView.adapter = bakingAdapter
     }
 
-    override fun listItemClick(baking: Recipe) {
-        startActivity(Intent(this, IngredientsActivity::class.java).putExtra(IngredientsActivity.EXTRA_BAKING, baking))
+    override fun listItemClick(recipe: Recipe) {
+        startActivity(IngredientsActivity.createIntent(this, recipe))
     }
 
     override fun showMessage(message: String) {
