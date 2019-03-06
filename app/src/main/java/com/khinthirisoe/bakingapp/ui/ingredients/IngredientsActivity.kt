@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
-import com.khinthirisoe.bakingapp.data.model.Step
-import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
 import kotlinx.android.synthetic.main.activity_ingredients.*
 
 
-class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
+class IngredientsActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_BAKING = "extra_baking"
@@ -70,15 +68,11 @@ class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewCl
         val stepLayoutManager = LinearLayoutManager(this)
         step_recyclerView.layoutManager = stepLayoutManager
 
-        stepsAdapter = StepsAdapter(null, this)
+        stepsAdapter = StepsAdapter(null)
 
 
         stepsAdapter?.setSteps(bakingRecipe!!.steps)
         step_recyclerView.adapter = stepsAdapter
-    }
-
-    override fun listItemClick(step: Step) {
-        startActivity(StepsActivity.createIntent(this, step))
     }
 
     override fun onSupportNavigateUp(): Boolean {

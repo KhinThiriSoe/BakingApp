@@ -8,8 +8,7 @@ import com.khinthirisoe.bakingapp.ui.base.inflate
 
 
 class BakingAdapter(
-    private var recipes: MutableList<Recipe>?,
-    private val clickListener: BakingRecyclerViewClickListener
+    private var recipes: MutableList<Recipe>?
 ) : RecyclerView.Adapter<BakingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BakingViewHolder {
@@ -19,10 +18,6 @@ class BakingAdapter(
     override fun onBindViewHolder(holder: BakingViewHolder, position: Int) {
 
         holder.onBind(recipes!![position], position)
-
-        holder.itemView.setOnClickListener {
-            clickListener.listItemClick(recipes!![position])
-        }
     }
 
     override fun getItemCount(): Int {
@@ -38,9 +33,4 @@ class BakingAdapter(
         this.recipes = recipes
         notifyDataSetChanged()
     }
-
-    interface BakingRecyclerViewClickListener {
-        fun listItemClick(recipe: Recipe)
-    }
-
 }

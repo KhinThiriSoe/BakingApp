@@ -10,11 +10,10 @@ import com.khinthirisoe.bakingapp.di.component.DaggerActivityComponent
 import com.khinthirisoe.bakingapp.di.module.ActivityModule
 import com.khinthirisoe.bakingapp.ui.baking.BakingContract
 import com.khinthirisoe.bakingapp.ui.base.BaseActivity
-import com.khinthirisoe.bakingapp.ui.ingredients.IngredientsActivity
 import kotlinx.android.synthetic.main.activity_baking.*
 import javax.inject.Inject
 
-class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.BakingRecyclerViewClickListener {
+class BakingActivity : BaseActivity(), BakingContract.View {
 
     @Inject
     lateinit var presenter: BakingContract.Presenter
@@ -44,17 +43,13 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
         val layoutManager = LinearLayoutManager(this)
         baking_recyclerView.layoutManager = layoutManager
 
-        bakingAdapter = BakingAdapter(null, this)
+        bakingAdapter = BakingAdapter(null)
 
     }
 
     override fun showBakingLists(recipes: ArrayList<Recipe>) {
         bakingAdapter?.setRecipes(recipes)
         baking_recyclerView.adapter = bakingAdapter
-    }
-
-    override fun listItemClick(recipe: Recipe) {
-        startActivity(IngredientsActivity.createIntent(this, recipe))
     }
 
     override fun showMessage(message: String) {
