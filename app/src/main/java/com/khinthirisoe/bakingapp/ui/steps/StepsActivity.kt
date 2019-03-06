@@ -7,66 +7,50 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
+import com.khinthirisoe.bakingapp.ui.steps.player.MediaPlayerImpl
 import kotlinx.android.synthetic.main.activity_steps.*
 
-class StepsActivity : AppCompatActivity(), StepsContract.View {
+class StepsActivity : AppCompatActivity() {
+
+    private lateinit var mediaPlayerImpl: MediaPlayerImpl
 
     companion object {
         const val EXTRA_STEP = "extra_step"
 
-        fun createIntent(context: Context, step: Step) : Intent {
+        fun createIntent(context: Context, step: Step): Intent {
             return Intent(context, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step)
         }
 
     }
 
-    private lateinit var presenter: StepsContract.Presenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_steps)
 
-        init()
+        initView()
     }
 
-    private fun init() {
+    private fun initView() {
 
-        presenter = StepsPresenter()
+        mediaPlayerImpl = MediaPlayerImpl()
 
         val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
-        ep_video_view.player = presenter.getPlayer().getPlayerImpl(this)
-        presenter.play(videoUrl.videoURL!!)
-    }
-
-    override fun showProgress() {
-        // show progress bar
-    }
-
-    override fun hideProgress() {
-        // hide progress bar
+        ep_video_view.player = mediaPlayerImpl.getPlayerImpl(this)
+        mediaPlayerImpl.play(videoUrl.videoURL!!)
     }
 
     override fun onPause() {
         super.onPause()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            presenter.releasePlayer()
+            mediaPlayerImpl.releasePlayer()
         }
     }
 
     override fun onStop() {
         super.onStop()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            presenter.releasePlayer()
+            mediaPlayerImpl.releasePlayer()
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.onAttachView(this)
-    }
-
-    override fun onDestroy() {
-        presenter.onDetachView()
-        super.onDestroy()
-    }
 }
