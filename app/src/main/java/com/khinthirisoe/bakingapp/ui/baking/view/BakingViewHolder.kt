@@ -14,7 +14,7 @@ class BakingViewHolder(itemView: View) : BaseViewHolder(itemView) {
         itemView.txt_no_of_serving.text = recipe.servings.toString()
         itemView.txt_baking_name.text = recipe.name
 
-        itemView.img_baking.setImageDrawable(itemView.context.resources.getDrawable(getImages(position)))
+        itemView.img_baking.setImageDrawable(itemView.context.resources.getDrawable(bakingImages[position]))
 
         itemView.setOnClickListener {
             itemView.context.startActivity(
@@ -28,13 +28,8 @@ class BakingViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
     companion object {
 
-        fun getImages(position: Int): Int {
-
-            val bakingImages =
-                arrayOf(R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake)
-
-            return bakingImages[position]
-        }
+        val bakingImages =
+            arrayOf(R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake)
     }
 }
 
