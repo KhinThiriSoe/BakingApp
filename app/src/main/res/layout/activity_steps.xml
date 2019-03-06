@@ -11,12 +11,12 @@
             android:id="@+id/ep_video_view"
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/standard_margin"
-            android:layout_height="230dp"/>
+            android:layout_height="@dimen/player_view_height"/>
 
     <TextView
             android:layout_marginTop="@dimen/standard_margin"
             android:id="@+id/txt_description"
-            android:padding="5dp"
+            android:padding="@dimen/card_view_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
