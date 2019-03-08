@@ -9,5 +9,4 @@
     <dimen name="ic_play_height">15dp</dimen>
 
     <dimen name="title">18sp</dimen>
-    <dimen name="dimen_zero">0dp</dimen>
 </resources>

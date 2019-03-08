@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="integer" name="txt_short_description_weight">0.8</item>
+    <item type="integer" name="list_baking_constraintGuide_percent">0.65</item>
+</resources>

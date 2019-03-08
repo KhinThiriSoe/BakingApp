@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="@dimen/dimen_zero"
-            android:layout_height="@dimen/dimen_zero"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

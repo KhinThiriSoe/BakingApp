@@ -8,8 +8,8 @@
     <TextView
             android:id="@+id/txt_short_description"
             android:padding="@dimen/standard_padding"
-            android:layout_width="@dimen/dimen_zero"
-            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:layout_weight="@integer/txt_short_description_weight"
             android:layout_height="wrap_content"/>
 
     <ImageView
