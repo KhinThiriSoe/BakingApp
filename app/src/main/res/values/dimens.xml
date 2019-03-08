@@ -2,10 +2,12 @@
 <resources>
     <dimen name="standard_margin">8dp</dimen>
     <dimen name="card_view_margin">5dp</dimen>
+    <dimen name="standard_padding">5dp</dimen>
     <dimen name="card_view_height">180dp</dimen>
     <dimen name="player_view_height">230dp</dimen>
     <dimen name="ic_play_width">20dp</dimen>
     <dimen name="ic_play_height">15dp</dimen>
 
     <dimen name="title">18sp</dimen>
+    <dimen name="dimen_zero">0dp</dimen>
 </resources>

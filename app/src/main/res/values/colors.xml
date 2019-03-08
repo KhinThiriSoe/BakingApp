@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="title_color">@android:color/black</color>
+    <color name="ic_play_color">#FF000000</color>
 </resources>

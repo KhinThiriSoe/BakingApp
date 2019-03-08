@@ -22,7 +22,7 @@
                     android:layout_height="wrap_content">
 
                 <TextView
-                        android:padding="@dimen/card_view_margin"
+                        android:padding="@dimen/standard_padding"
                         android:textSize="@dimen/title"
                         android:textColor="@color/title_color"
                         android:text="@string/ingredients"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content">
 
                 <TextView
-                        android:padding="@dimen/card_view_margin"
+                        android:padding="@dimen/standard_padding"
                         android:textSize="@dimen/title"
                         android:textColor="@color/title_color"
                         android:text="@string/steps"
