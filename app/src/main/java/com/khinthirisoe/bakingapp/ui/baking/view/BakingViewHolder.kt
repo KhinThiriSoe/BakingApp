@@ -14,7 +14,11 @@ class BakingViewHolder(itemView: View) : BaseViewHolder(itemView) {
         itemView.txt_no_of_serving.text = recipe.servings.toString()
         itemView.txt_baking_name.text = recipe.name
 
-        itemView.img_baking.setImageDrawable(itemView.context.resources.getDrawable(bakingImages[position]))
+        if (position < bakingImages.size){
+            itemView.img_baking.setImageDrawable(itemView.context.resources.getDrawable(bakingImages[position]))
+        }else{
+            itemView.img_baking.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.yellow_cake))
+        }
 
         itemView.setOnClickListener {
             itemView.context.startActivity(
