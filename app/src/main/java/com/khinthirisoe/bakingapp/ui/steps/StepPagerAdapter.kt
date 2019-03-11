@@ -5,8 +5,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.khinthirisoe.bakingapp.data.model.Step
 
-class StepPagerAdapter(fragmentManager: FragmentManager, private var steps: ArrayList<Step>) :
-    FragmentStatePagerAdapter(fragmentManager) {
+class StepPagerAdapter(
+    fragmentManager: FragmentManager,
+    private var steps: ArrayList<Step>
+) : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
         return StepVideoFragment.newInstance(steps[position])

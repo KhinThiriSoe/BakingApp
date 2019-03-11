@@ -26,18 +26,13 @@ class StepVideoFragment : Fragment() {
     private lateinit var exoPlayer: ExoPlayer
 
     companion object {
-        const val STEP_ID = "id"
-        const val STEP_DESCRIPTION = "description"
-        const val STEP_SHORT_DESCRIPTION = "short_description"
-        const val STEP_VIDEO = "video"
+
+        private const val EXTRA_STEP = "extra_step"
 
         fun newInstance(step: Step): StepVideoFragment {
 
             val args = Bundle()
-            args.putInt(STEP_ID, step.id)
-            args.putString(STEP_DESCRIPTION, step.description)
-            args.putString(STEP_SHORT_DESCRIPTION, step.shortDescription)
-            args.putString(STEP_VIDEO, step.videoURL)
+            args.putParcelable(EXTRA_STEP, step)
 
             val fragment = StepVideoFragment()
             fragment.arguments = args
@@ -59,9 +54,10 @@ class StepVideoFragment : Fragment() {
     private fun initView() {
 
         val args = arguments
-        val description = args?.getString(STEP_DESCRIPTION)
-        val shortDescription = args?.getString(STEP_SHORT_DESCRIPTION)
-        val videoUrl = args?.getString(STEP_VIDEO)
+        val step = args?.getParcelable<Step>(EXTRA_STEP)
+        val description = step?.description
+        val shortDescription = step?.shortDescription
+        val videoUrl = step?.videoURL
 
         initializePlayer()
 

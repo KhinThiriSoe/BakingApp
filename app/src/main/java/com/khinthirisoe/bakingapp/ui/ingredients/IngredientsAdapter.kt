@@ -7,7 +7,7 @@ import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.ui.base.inflate
 
 class IngredientsAdapter(
-    private var ingredients: MutableList<Ingredient>?
+    private var ingredients: ArrayList<Ingredient>?
 ) : RecyclerView.Adapter<IngredientsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientsViewHolder {
