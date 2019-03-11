@@ -27,12 +27,10 @@ class StepVideoFragment : Fragment() {
 
     companion object {
 
-        private const val EXTRA_STEP = "extra_step"
-
         fun newInstance(step: Step): StepVideoFragment {
 
             val args = Bundle()
-            args.putParcelable(EXTRA_STEP, step)
+            args.putParcelable(Step::class.java.simpleName, step)
 
             val fragment = StepVideoFragment()
             fragment.arguments = args
@@ -54,7 +52,7 @@ class StepVideoFragment : Fragment() {
     private fun initView() {
 
         val args = arguments
-        val step = args?.getParcelable<Step>(EXTRA_STEP)
+        val step = args?.getParcelable<Step>(Step::class.java.simpleName)
         val description = step?.description
         val shortDescription = step?.shortDescription
         val videoUrl = step?.videoURL
