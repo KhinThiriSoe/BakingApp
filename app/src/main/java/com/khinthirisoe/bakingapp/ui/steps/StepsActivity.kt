@@ -36,7 +36,7 @@ class StepsActivity : AppCompatActivity() {
         val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
 
         if (supportActionBar != null) {
-            supportActionBar?.title = "Steps"
+            supportActionBar?.title = getString(R.string.steps)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }
