@@ -16,10 +16,10 @@ class StepsActivity : AppCompatActivity() {
         private const val EXTRA_STEP_LIST = "extra_step_list"
         private const val EXTRA_STEP_POSITION = "extra_step_position"
 
-        fun createIntent(context: Context, position: Int, stepList: ArrayList<Step>): Intent {
+        fun createIntent(context: Context, stepList: ArrayList<Step>, position: Int): Intent {
             return Intent(context, StepsActivity::class.java)
-                .putExtra(EXTRA_STEP_POSITION, position)
                 .putExtra(StepsActivity.EXTRA_STEP_LIST, stepList)
+                .putExtra(EXTRA_STEP_POSITION, position)
         }
 
     }

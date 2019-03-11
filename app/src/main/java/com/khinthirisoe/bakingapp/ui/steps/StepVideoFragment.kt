@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
@@ -28,13 +29,9 @@ class StepVideoFragment : Fragment() {
     companion object {
 
         fun newInstance(step: Step): StepVideoFragment {
-
-            val args = Bundle()
-            args.putParcelable(Step::class.java.simpleName, step)
-
-            val fragment = StepVideoFragment()
-            fragment.arguments = args
-            return fragment
+            return StepVideoFragment().apply {
+                arguments = bundleOf(Step::class.java.simpleName to step)
+            }
         }
     }
 

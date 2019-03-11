@@ -15,7 +15,7 @@ class StepsViewHolder(itemView: View) : BaseViewHolder(itemView) {
         itemView.txt_short_description.text = shortDescriptionString
 
         itemView.setOnClickListener {
-            itemView.context.startActivity(StepsActivity.createIntent(itemView.context, position, steps))
+            itemView.context.startActivity(StepsActivity.createIntent(itemView.context, steps, position))
         }
     }
 
