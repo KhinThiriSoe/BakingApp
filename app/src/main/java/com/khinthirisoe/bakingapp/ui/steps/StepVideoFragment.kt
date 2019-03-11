@@ -26,8 +26,6 @@ class StepVideoFragment : Fragment() {
     private lateinit var exoPlayer: ExoPlayer
 
     companion object {
-        const val EXTRA_STEP = "extra_step"
-
         const val STEP_ID = "id"
         const val STEP_DESCRIPTION = "description"
         const val STEP_SHORT_DESCRIPTION = "short_description"
@@ -49,9 +47,7 @@ class StepVideoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val rootView = inflater.inflate(R.layout.fragment_step_video, container, false)
-
-        return rootView
+        return inflater.inflate(R.layout.fragment_step_video, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,18 +59,30 @@ class StepVideoFragment : Fragment() {
     private fun initView() {
 
         val args = arguments
-        val id = args?.getInt(STEP_ID)
         val description = args?.getString(STEP_DESCRIPTION)
         val shortDescription = args?.getString(STEP_SHORT_DESCRIPTION)
-        val videolUrl = args?.getString(STEP_VIDEO)
-
-
-        ep_video_view.player = getPlayer()
-        play(videolUrl!!)
-        txt_description.text = description
-        txt_short_description.text = shortDescription
+        val videoUrl = args?.getString(STEP_VIDEO)
 
         initializePlayer()
+
+        ep_video_view.player = getPlayer()
+        play(videoUrl!!)
+        txt_description.text = description
+        txt_short_description.text = shortDescription
+    }
+
+    private fun initializePlayer() {
+
+        val trackSelector = DefaultTrackSelector()
+        val loadControl = DefaultLoadControl()
+        val rendererFactory = DefaultRenderersFactory(context)
+
+        exoPlayer = ExoPlayerFactory.newSimpleInstance(rendererFactory, trackSelector, loadControl)
+    }
+
+    private fun getPlayer(): ExoPlayer {
+        initializePlayer()
+        return exoPlayer
     }
 
     private fun play(url: String) {
@@ -85,20 +93,6 @@ class StepVideoFragment : Fragment() {
             .createMediaSource(Uri.parse(url))
         exoPlayer.prepare(mediaSource)
         exoPlayer.playWhenReady = true
-    }
-
-    private fun getPlayer(): ExoPlayer {
-        initializePlayer()
-        return exoPlayer
-    }
-
-    private fun initializePlayer() {
-
-        val trackSelector = DefaultTrackSelector()
-        val loadControl = DefaultLoadControl()
-        val rendererFactory = DefaultRenderersFactory(context)
-
-        exoPlayer = ExoPlayerFactory.newSimpleInstance(rendererFactory, trackSelector, loadControl)
     }
 
     private fun releasePlayer() {
