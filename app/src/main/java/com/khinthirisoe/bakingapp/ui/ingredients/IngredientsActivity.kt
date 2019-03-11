@@ -1,84 +1,77 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.khinthirisoe.bakingapp.data.model.Ingredient
+import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
-import com.khinthirisoe.bakingapp.data.model.Step
-import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
+import kotlinx.android.synthetic.main.activity_ingredients.*
 
-
-
-
-class IngredientsActivity : AppCompatActivity(), StepsAdapter.StepRecyclerViewClickListener {
+class IngredientsActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_BAKING = "extra_baking"
+
+        fun createIntent(context: Context, recipe: Recipe): Intent {
+            return Intent(context, IngredientsActivity::class.java).putExtra(EXTRA_BAKING, recipe)
+        }
     }
 
-    private lateinit var ingredientRecyclerView: RecyclerView
     private var ingredientsAdapter: IngredientsAdapter? = null
-    private lateinit var stepRecyclerView: RecyclerView
     private var stepsAdapter: StepsAdapter? = null
-
-    private lateinit var bakingName: String
-    private var stepList: MutableList<Step>? = null
+    private var bakingRecipe: Recipe? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.khinthirisoe.bakingapp.R.layout.activity_ingredients)
+        setContentView(R.layout.activity_ingredients)
 
-        val bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
-        bakingName = bakingRecipe.name
+        bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
+
+        initView()
+
+    }
+
+    private fun initView() {
 
         setUpToolbar()
 
-        setUpView()
+        setupIngredients()
 
-        configureUI(bakingRecipe)
+        setUpSteps()
+
     }
 
     private fun setUpToolbar() {
         if (supportActionBar != null) {
-            supportActionBar?.title = bakingName
+            supportActionBar?.title = bakingRecipe!!.name
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }
     }
 
-    private fun setUpView() {
+    private fun setupIngredients() {
+        val ingredientLayoutManager = LinearLayoutManager(this)
+        ingredient_recyclerView.layoutManager = ingredientLayoutManager
 
-        ingredientRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.ingredient_recyclerView)
-        stepRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.step_recyclerView)
+        ingredientsAdapter = IngredientsAdapter(null)
 
-        val mIngredientLayoutManager = LinearLayoutManager(this)
-        ingredientRecyclerView.layoutManager = mIngredientLayoutManager
+        ingredientsAdapter?.setIngredients(bakingRecipe!!.ingredients)
+        ingredient_recyclerView.adapter = ingredientsAdapter
 
-        val mLayoutManager = LinearLayoutManager(this)
-        stepRecyclerView.addItemDecoration(DividerItemDecoration(stepRecyclerView.context, DividerItemDecoration.VERTICAL))
-        stepRecyclerView.layoutManager = mLayoutManager
     }
 
-    private fun configureUI(recipe: Recipe) {
-        stepList = recipe.steps
+    private fun setUpSteps() {
 
-        ingredientsAdapter = IngredientsAdapter(this, recipe.ingredients as MutableList<Ingredient>)
-        ingredientRecyclerView.adapter = ingredientsAdapter
+        val stepLayoutManager = LinearLayoutManager(this)
+        step_recyclerView.layoutManager = stepLayoutManager
 
-        stepsAdapter = StepsAdapter(recipe.steps as MutableList<Step>, this)
-        stepRecyclerView.adapter = stepsAdapter
-    }
+        stepsAdapter = StepsAdapter(null)
 
-    override fun listItemClick(step: Step) {
-        startActivity(
-            Intent(this, StepsActivity::class.java)
-                .putExtra(StepsActivity.EXTRA_STEP, step)
-                .putParcelableArrayListExtra(StepsActivity.EXTRA_STEP_LIST, (ArrayList(stepList)))
-        )
+
+        stepsAdapter?.setSteps(bakingRecipe!!.steps)
+        step_recyclerView.adapter = stepsAdapter
     }
 
     override fun onSupportNavigateUp(): Boolean {

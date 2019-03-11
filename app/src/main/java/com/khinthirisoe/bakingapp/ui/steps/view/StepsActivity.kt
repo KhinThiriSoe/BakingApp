@@ -1,5 +1,7 @@
 package com.khinthirisoe.bakingapp.ui.steps.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -13,6 +15,11 @@ class StepsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_STEP = "extra_step"
         const val EXTRA_STEP_LIST = "extra_step_list"
+
+        fun createIntent(context: Context, step: Step): Intent {
+            return Intent(context, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step)
+        }
+
     }
 
     private lateinit var viewPager: ViewPager

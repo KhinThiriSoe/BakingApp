@@ -6,7 +6,7 @@
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/standard_margin"
-        android:layout_height="180dp">
+        android:layout_height="@dimen/card_view_height">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/guideline"
-                app:layout_constraintGuide_percent="0.65"
+                app:layout_constraintGuide_percent="@integer/list_baking_constraintGuide_percent"
                 android:orientation="vertical"/>
 
         <TextView
@@ -36,8 +36,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/txt_serving"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

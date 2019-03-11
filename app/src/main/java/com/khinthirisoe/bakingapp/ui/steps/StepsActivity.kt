@@ -1,12 +1,11 @@
-package com.khinthirisoe.bakingapp.ui.steps.view
+package com.khinthirisoe.bakingapp.ui.steps
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayer
@@ -18,69 +17,39 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
-import kotlinx.android.synthetic.main.fragment_step_video.*
+import kotlinx.android.synthetic.main.activity_steps.*
 
-
-class StepVideoFragment : Fragment() {
+class StepsActivity : AppCompatActivity() {
 
     private lateinit var exoPlayer: ExoPlayer
 
     companion object {
         const val EXTRA_STEP = "extra_step"
 
-        const val STEP_ID = "id"
-        const val STEP_DESCRIPTION = "description"
-        const val STEP_SHORT_DESCRIPTION = "short_description"
-        const val STEP_VIDEO = "video"
-
-        fun newInstance(step: Step): StepVideoFragment {
-
-            val args = Bundle()
-            args.putInt(STEP_ID, step.id)
-            args.putString(STEP_DESCRIPTION, step.description)
-            args.putString(STEP_SHORT_DESCRIPTION, step.shortDescription)
-            args.putString(STEP_VIDEO, step.videoURL)
-
-            val fragment = StepVideoFragment()
-            fragment.arguments = args
-            return fragment
+        fun createIntent(context: Context, step: Step): Intent {
+            return Intent(context, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step)
         }
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val rootView = inflater.inflate(R.layout.fragment_step_video, container, false)
-
-        return rootView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_steps)
 
         initView()
     }
 
     private fun initView() {
 
-        val args = arguments
-        val id = args?.getInt(STEP_ID)
-        val description = args?.getString(STEP_DESCRIPTION)
-        val shortDescription = args?.getString(STEP_SHORT_DESCRIPTION)
-        val videolUrl = args?.getString(STEP_VIDEO)
-
-
+        val videoUrl = intent.getParcelableExtra<Step>(EXTRA_STEP)
         ep_video_view.player = getPlayer()
-        play(videolUrl!!)
-        txt_description.text = description
-        txt_short_description.text = shortDescription
-
-        initializePlayer()
+        play(videoUrl.videoURL!!)
     }
 
     private fun play(url: String) {
-        val userAgent = Util.getUserAgent(context, getString(R.string.app_name))
+        val userAgent = Util.getUserAgent(this, getString(R.string.app_name))
         val mediaSource = ExtractorMediaSource
-            .Factory(DefaultDataSourceFactory(context, userAgent))
+            .Factory(DefaultDataSourceFactory(this, userAgent))
             .setExtractorsFactory(DefaultExtractorsFactory())
             .createMediaSource(Uri.parse(url))
         exoPlayer.prepare(mediaSource)
@@ -96,7 +65,7 @@ class StepVideoFragment : Fragment() {
 
         val trackSelector = DefaultTrackSelector()
         val loadControl = DefaultLoadControl()
-        val rendererFactory = DefaultRenderersFactory(context)
+        val rendererFactory = DefaultRenderersFactory(this)
 
         exoPlayer = ExoPlayerFactory.newSimpleInstance(rendererFactory, trackSelector, loadControl)
     }
@@ -119,4 +88,5 @@ class StepVideoFragment : Fragment() {
             releasePlayer()
         }
     }
+
 }

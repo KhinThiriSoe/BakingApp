@@ -3,7 +3,11 @@ package com.khinthirisoe.bakingapp.ui.baking.presenter
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.ui.baking.BakingContract
 import com.khinthirisoe.bakingapp.ui.baking.model.BakingRepository
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class BakingPresenter @Inject
@@ -11,28 +15,31 @@ class BakingPresenter @Inject
 constructor(var repository: BakingRepository) : BakingContract.Presenter {
 
     var view: BakingContract.View? = null
-    var disposable: Disposable? = null
+    var disposable: CompositeDisposable? = null
 
     override fun fetchBakingRecipes() {
         if (view != null) view?.showProgress()
-        repository.fetchRecipes(
-            object : OnFetchRecipeListener {
-                override fun onFetchRecipeSuccess(recipe: ArrayList<Recipe>) {
+
+        repository.fetchRecipes()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : SingleObserver<ArrayList<Recipe>> {
+                override fun onSuccess(recipes: ArrayList<Recipe>) {
                     if (view != null) {
-                        view?.showBakingLists(recipe)
+                        view?.showBakingLists(recipes)
                         view?.hideProgress()
                     }
                 }
 
-                override fun onFetchRecipeFailed(message: String) {
-                    if (view != null) {
-                        view?.showMessage(message)
-                        view?.hideProgress()
-                    }
+                override fun onSubscribe(d: Disposable) {
+                    disposable?.add(d)
                 }
 
-                override fun onFetchRecipeDisposable(d: Disposable) {
-                    disposable = d
+                override fun onError(e: Throwable) {
+                    if (view != null) {
+                        view?.showMessage(e.message!!)
+                        view?.hideProgress()
+                    }
                 }
 
             })
@@ -43,17 +50,8 @@ constructor(var repository: BakingRepository) : BakingContract.Presenter {
     }
 
     override fun onDetachView() {
-        disposable?.dispose()
+        disposable?.clear()
         this.view = null
-    }
-
-    interface OnFetchRecipeListener {
-
-        fun onFetchRecipeSuccess(recipe: ArrayList<Recipe>)
-
-        fun onFetchRecipeFailed(message: String)
-
-        fun onFetchRecipeDisposable(d: Disposable)
     }
 
 }
