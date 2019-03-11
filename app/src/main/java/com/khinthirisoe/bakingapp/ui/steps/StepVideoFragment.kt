@@ -53,7 +53,8 @@ class StepVideoFragment : Fragment() {
         val shortDescription = step?.shortDescription
         val videoUrl = step?.videoURL
 
-        ep_video_view.player = getPlayer()
+        initializePlayer()
+
         play(videoUrl!!)
         txt_description.text = description
         txt_short_description.text = shortDescription
@@ -66,11 +67,8 @@ class StepVideoFragment : Fragment() {
         val rendererFactory = DefaultRenderersFactory(context)
 
         exoPlayer = ExoPlayerFactory.newSimpleInstance(rendererFactory, trackSelector, loadControl)
-    }
 
-    private fun getPlayer(): ExoPlayer {
-        initializePlayer()
-        return exoPlayer
+        ep_video_view.player = exoPlayer
     }
 
     private fun play(url: String) {
