@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui.steps.view
+package com.khinthirisoe.bakingapp.ui.steps
 
 import android.net.Uri
 import android.os.Build

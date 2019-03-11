@@ -16,7 +16,7 @@ class StepsAdapter(
 
     override fun onBindViewHolder(holder: StepsViewHolder, position: Int) {
 
-        holder.onBind(steps!![position], position)
+        holder.onBind(steps!![position], steps as ArrayList<Step>, position)
     }
 
     override fun getItemCount(): Int {
