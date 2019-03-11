@@ -13,11 +13,12 @@ class StepsActivity : AppCompatActivity() {
     private lateinit var pagerAdapter: StepPagerAdapter
 
     companion object {
-        const val EXTRA_STEP = "extra_step"
         private const val EXTRA_STEP_LIST = "extra_step_list"
+        private const val EXTRA_STEP_POSITION = "extra_step_position"
 
-        fun createIntent(context: Context, step: Step, stepList: ArrayList<Step>): Intent {
-            return Intent(context, StepsActivity::class.java).putExtra(StepsActivity.EXTRA_STEP, step)
+        fun createIntent(context: Context, position: Int, stepList: ArrayList<Step>): Intent {
+            return Intent(context, StepsActivity::class.java)
+                .putExtra(EXTRA_STEP_POSITION, position)
                 .putExtra(StepsActivity.EXTRA_STEP_LIST, stepList)
         }
 
@@ -33,10 +34,10 @@ class StepsActivity : AppCompatActivity() {
     private fun initView() {
 
         val steps = intent.getParcelableArrayListExtra<Step>(EXTRA_STEP_LIST)
-        val step = intent.getParcelableExtra<Step>(EXTRA_STEP)
+        val position = intent.getIntExtra(EXTRA_STEP_POSITION, 0)
 
         if (supportActionBar != null) {
-            supportActionBar?.title = getString(R.string.steps)
+            supportActionBar?.title = resources.getString(R.string.steps)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }
@@ -44,7 +45,7 @@ class StepsActivity : AppCompatActivity() {
         pagerAdapter = StepPagerAdapter(supportFragmentManager, steps)
 
         viewPager.adapter = pagerAdapter
-        viewPager.currentItem = step.id
+        viewPager.currentItem = steps[position].id
         tabLayout.setupWithViewPager(viewPager)
 
     }
