@@ -7,17 +7,17 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class FragmentModule(private val mFragment: Fragment) {
+class FragmentModule(private val fragment: Fragment) {
 
     @Provides
     fun provideFragment(): Fragment {
-        return mFragment
+        return fragment
     }
 
     @Provides
     @ActivityContext
     fun provideFragmentContext(): Context {
-        return mFragment.context!!
+        return fragment.context!!
     }
 
 }

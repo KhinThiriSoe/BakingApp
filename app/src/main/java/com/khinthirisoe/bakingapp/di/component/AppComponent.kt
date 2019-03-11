@@ -1,6 +1,7 @@
 package com.khinthirisoe.bakingapp.di.component
 
 import android.content.Context
+import com.khinthirisoe.bakingapp.data.network.ApiService
 import com.khinthirisoe.bakingapp.di.App
 import com.khinthirisoe.bakingapp.di.context.ApplicationContext
 import com.khinthirisoe.bakingapp.di.module.ApplicationModule
@@ -17,4 +18,7 @@ interface AppComponent {
     fun inject(application: App)
 
     fun app(): App
+
+    fun apiService(): ApiService
+
 }

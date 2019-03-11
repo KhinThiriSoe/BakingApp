@@ -12,4 +12,5 @@ interface FragmentComponent {
 
     @get:ActivityContext
     var context: Context
+
 }
