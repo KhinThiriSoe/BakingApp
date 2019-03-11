@@ -37,13 +37,11 @@ class StepVideoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_step_video, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val rootView = inflater.inflate(R.layout.fragment_step_video, container, false)
 
         initView()
+
+        return rootView
     }
 
     private fun initView() {
@@ -56,7 +54,6 @@ class StepVideoFragment : Fragment() {
 
         initializePlayer()
 
-        ep_video_view.player = getPlayer()
         play(videoUrl!!)
         txt_description.text = description
         txt_short_description.text = shortDescription
@@ -68,13 +65,9 @@ class StepVideoFragment : Fragment() {
         val loadControl = DefaultLoadControl()
         val rendererFactory = DefaultRenderersFactory(context)
 
-        exoPlayer = ExoPlayerFactory.newSimpleInstance(rendererFactory, trackSelector, loadControl)
+        ep_video_view.player = ExoPlayerFactory.newSimpleInstance(rendererFactory, trackSelector, loadControl)
     }
 
-    private fun getPlayer(): ExoPlayer {
-        initializePlayer()
-        return exoPlayer
-    }
 
     private fun play(url: String) {
         val userAgent = Util.getUserAgent(context, getString(R.string.app_name))
