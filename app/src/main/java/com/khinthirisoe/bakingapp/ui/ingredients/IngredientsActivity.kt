@@ -1,5 +1,6 @@
 package com.khinthirisoe.bakingapp.ui.ingredients
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -8,24 +9,25 @@ import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
-import com.khinthirisoe.bakingapp.ui.steps.view.StepsActivity
-import com.khinthirisoe.bakingapp.ui.steps.view.StepsFragment
-
+import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
+import com.khinthirisoe.bakingapp.ui.steps.StepsFragment
 
 class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentInteractionListener {
 
     companion object {
         const val EXTRA_BAKING = "extra_baking"
+
+        fun createIntent(context: Context, recipe: Recipe): Intent {
+            return Intent(context, IngredientsActivity::class.java).putExtra(EXTRA_BAKING, recipe)
+        }
     }
 
     private var fragmentContainer: FrameLayout? = null
     private var stepsFragment: StepsFragment? = null
     private var preferencesHelper: AppPreferencesHelper? = null
 
-    private var ingredientsFragment: IngredientsFragment = IngredientsFragment.newInstance()
-
     private var bakingName: String? = null
-    private var stepList: MutableList<Step>? = null
+    private var stepList: ArrayList<Step>? = null
     private var bakingRecipe: Recipe? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,17 +61,17 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
         }
     }
 
-    override fun onListItemClicked(step: Step) {
+    override fun onListItemClicked(position: Int) {
 
         if (!preferencesHelper!!.isLargeScreen) {
             startActivity(
                 Intent(this, StepsActivity::class.java)
-                    .putExtra(StepsFragment.EXTRA_STEP, step)
-                    .putParcelableArrayListExtra(StepsFragment.EXTRA_STEP_LIST, (ArrayList(stepList)))
+                    .putExtra(StepsActivity.EXTRA_STEP_POSITION, position)
+                    .putParcelableArrayListExtra(StepsActivity.EXTRA_STEP_LIST, stepList)
             )
 
         } else {
-            stepsFragment = StepsFragment.newInstance(stepList as ArrayList<Step>, step)
+            stepsFragment = StepsFragment.newInstance(stepList!!, position)
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_container,

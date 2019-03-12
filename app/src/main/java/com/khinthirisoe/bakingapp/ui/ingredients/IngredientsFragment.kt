@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.db.repository.IngredientsRepository
-import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
 import com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget
 
 
-class IngredientsFragment : Fragment(), StepsAdapter.StepRecyclerViewClickListener {
+class IngredientsFragment : Fragment() {
 
     private lateinit var ingredientRecyclerView: RecyclerView
     private var ingredientsAdapter: IngredientsAdapter? = null
@@ -31,7 +30,8 @@ class IngredientsFragment : Fragment(), StepsAdapter.StepRecyclerViewClickListen
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
 
         val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
 
@@ -85,20 +85,20 @@ class IngredientsFragment : Fragment(), StepsAdapter.StepRecyclerViewClickListen
             }
 
             ingredientsAdapter =
-                IngredientsAdapter(recipe.ingredients as MutableList<Ingredient>)
+                IngredientsAdapter(recipe.ingredients)
             ingredientRecyclerView.adapter = ingredientsAdapter
 
-            stepsAdapter = StepsAdapter(recipe.steps as MutableList<Step>, this@IngredientsFragment)
+            stepsAdapter = StepsAdapter(recipe.steps)
             stepRecyclerView.adapter = stepsAdapter
         }
     }
 
-    override fun listItemClick(step: Step) {
-        listener?.onListItemClicked(step)
-    }
+//    override fun listItemClick(step: Step) {
+//        listener?.onListItemClicked(step)
+//    }
 
     interface OnFragmentInteractionListener {
-        fun onListItemClicked(step: Step)
+        fun onListItemClicked(position: Int)
     }
 
     companion object {

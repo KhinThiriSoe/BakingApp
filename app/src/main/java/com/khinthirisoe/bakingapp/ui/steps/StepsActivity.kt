@@ -1,18 +1,30 @@
-package com.khinthirisoe.bakingapp.ui.steps.view
+package com.khinthirisoe.bakingapp.ui.steps
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
-import com.khinthirisoe.bakingapp.ui.steps.view.StepsFragment.Companion.EXTRA_STEP
-import com.khinthirisoe.bakingapp.ui.steps.view.StepsFragment.Companion.EXTRA_STEP_LIST
-
 
 class StepsActivity : AppCompatActivity() {
 
+    companion object {
+
+        const val EXTRA_STEP_LIST = "extra_step_list"
+        const val EXTRA_STEP_POSITION = "extra_step_position"
+
+        fun createIntent(context: Context, stepList: ArrayList<Step>, position: Int): Intent {
+            return Intent(context, StepsActivity::class.java)
+                .putExtra(StepsActivity.EXTRA_STEP_LIST, stepList)
+                .putExtra(EXTRA_STEP_POSITION, position)
+        }
+
+    }
+
     private var stepsFragment: StepsFragment? = null
     private var stepList: ArrayList<Step>? = null
-    private var step: Step? = null
+    private var position: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +32,10 @@ class StepsActivity : AppCompatActivity() {
 
         if (intent.hasExtra(EXTRA_STEP_LIST)) {
             stepList = intent.getParcelableArrayListExtra(EXTRA_STEP_LIST)
-            step = intent.getParcelableExtra(EXTRA_STEP)
+            position = intent.getIntExtra(EXTRA_STEP_POSITION, 0)
         }
 
-        stepsFragment = StepsFragment.newInstance(stepList!!, step!!)
+        stepsFragment = StepsFragment.newInstance(stepList!!, position!!)
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, stepsFragment!!, "Step Fragment")
             .commit()

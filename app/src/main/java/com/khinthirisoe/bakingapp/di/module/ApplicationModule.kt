@@ -2,8 +2,8 @@ package com.khinthirisoe.bakingapp.di.module
 
 import android.content.Context
 import com.google.gson.Gson
-import com.khinthirisoe.bakingapp.data.network.ApiEndPoint
-import com.khinthirisoe.bakingapp.data.network.ApiHelper
+import com.khinthirisoe.bakingapp.data.network.ApiService
+import com.khinthirisoe.bakingapp.data.network.ApiUrl
 import com.khinthirisoe.bakingapp.di.App
 import com.khinthirisoe.bakingapp.di.context.ApplicationContext
 import dagger.Module
@@ -31,7 +31,7 @@ class ApplicationModule(private val app: App) {
 
     @Provides
     @Singleton
-    fun apiService(): ApiHelper {
+    fun apiService(): ApiService {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -50,11 +50,12 @@ class ApplicationModule(private val app: App) {
             .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
 
-        return Retrofit.Builder().baseUrl(ApiEndPoint.BASE_URL)
+        return Retrofit.Builder().baseUrl(ApiUrl.BASE_URL)
             .client(client.build())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
-            .create(ApiHelper::class.java)
+            .create(ApiService::class.java)
     }
+
 }

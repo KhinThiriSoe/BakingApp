@@ -1,4 +1,4 @@
-package com.khinthirisoe.bakingapp.ui.steps.view
+package com.khinthirisoe.bakingapp.ui.steps
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayout
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
+import com.khinthirisoe.bakingapp.ui.steps.StepsActivity.Companion.EXTRA_STEP_LIST
 
 
 class StepsFragment : Fragment() {
@@ -31,19 +32,19 @@ class StepsFragment : Fragment() {
 
 
         val stepList = arguments!!.getParcelableArrayList<Step>(EXTRA_STEP_LIST)
-        val step = arguments!!.getParcelable<Step>(EXTRA_STEP)
+        val position = arguments!!.getInt(StepsActivity.EXTRA_STEP_POSITION)
 
         if (preferencesHelper!!.isLargeScreen) {
             if (pagerAdapter == null) {
                 pagerAdapter = StepPagerAdapter(childFragmentManager, stepList)
                 viewPager.adapter = pagerAdapter
-                viewPager.currentItem = step.id
+                viewPager.currentItem = stepList[position].id
             }
 
         } else {
             pagerAdapter = StepPagerAdapter(activity!!.supportFragmentManager, stepList)
             viewPager.adapter = pagerAdapter
-            viewPager.currentItem = step.id
+            viewPager.currentItem = stepList[position].id
             tabLayout.setupWithViewPager(viewPager)
 
         }
@@ -53,14 +54,11 @@ class StepsFragment : Fragment() {
 
     companion object {
 
-        const val EXTRA_STEP = "extra_step"
-        const val EXTRA_STEP_LIST = "extra_step_list"
-
         @JvmStatic
-        fun newInstance(list: ArrayList<Step>, step: Step): StepsFragment {
+        fun newInstance(list: ArrayList<Step>, position: Int): StepsFragment {
             val fragment = StepsFragment()
             val args = Bundle()
-            args.putParcelable(EXTRA_STEP, step)
+            args.putInt(StepsActivity.EXTRA_STEP_POSITION, position)
             args.putParcelableArrayList(EXTRA_STEP_LIST, list)
             fragment.arguments = args
             return fragment

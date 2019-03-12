@@ -12,13 +12,13 @@
                 android:id="@+id/ep_video_view"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="@dimen/standard_margin"
-                android:layout_height="wrap_content"/>
+                android:layout_height="@dimen/player_view_height"/>
 
         <TextView
                 android:id="@+id/txt_short_description"
-                android:padding="16dp"
-                android:textSize="20sp"
-                android:textColor="@android:color/black"
+                android:padding="@dimen/text_description_padding"
+                android:textSize="@dimen/title_text_size"
+                android:textColor="@color/title_color"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
@@ -27,9 +27,8 @@
         <TextView
                 android:layout_marginTop="@dimen/standard_margin"
                 android:id="@+id/txt_description"
-                android:padding="16dp"
-                android:letterSpacing="0.05"
-                android:textSize="18sp"
+                android:padding="@dimen/text_description_padding"
+                android:textSize="@dimen/description_text_size"
                 android:layout_below="@id/txt_short_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
