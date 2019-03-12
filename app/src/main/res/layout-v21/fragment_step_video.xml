@@ -13,7 +13,7 @@
             android:id="@+id/txt_short_description"
             android:padding="@dimen/text_description_padding"
             android:textSize="@dimen/title_text_size"
-            android:textColor="@android:color/black"
+            android:textColor="@color/title_color"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
