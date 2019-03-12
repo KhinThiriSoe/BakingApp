@@ -21,8 +21,6 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
         }
     }
 
-    private var fragmentContainer: FrameLayout? = null
-    private var stepsFragment: StepsFragment? = null
     private var preferencesHelper: AppPreferencesHelper? = null
 
     private var recipe: Recipe? = null
@@ -50,7 +48,7 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
 
         supportFragmentManager.findFragmentById(R.id.list_selection_fragment) as IngredientsFragment
 
-        fragmentContainer = findViewById(R.id.fragment_container)
+        val fragmentContainer = findViewById<FrameLayout>(R.id.fragment_container)
         preferencesHelper!!.isLargeScreen = fragmentContainer != null
     }
 
@@ -64,11 +62,11 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
             )
 
         } else {
-            stepsFragment = StepsFragment.newInstance(recipe!!.steps, position)
+            val stepsFragment = StepsFragment.newInstance(recipe!!.steps, position)
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_container,
-                    stepsFragment!!,
+                    stepsFragment,
                     "Steps Fragment"
                 )
                 .addToBackStack(null)

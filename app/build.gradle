@@ -52,7 +52,6 @@ ext {
     junitVersion = '4.12'
     testRunnerVersion = '1.1.2-alpha01'
     espressoVersion = '3.1.2-alpha01'
-    roomVersion = '1.0.0'
     multidexVersion = '1.0.3'
 }
 
@@ -82,10 +81,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerCompilerVersion"
 
     implementation "com.google.android.exoplayer:exoplayer:$exoplayerVersion"
-
-    // Room DB
-    implementation "android.arch.persistence.room:runtime:${roomVersion}"
-    kapt "android.arch.persistence.room:compiler:${roomVersion}"
 
     implementation "com.android.support:multidex:$multidexVersion"
 
