@@ -24,6 +24,6 @@
             android:layout_alignBottom="@id/viewPager"
             app:tabBackground="@drawable/tab_selector"
             app:tabGravity="center"
-            app:tabIndicatorHeight="@dimen/empty_size"/>
+            app:tabIndicatorHeight="@dimen/tab_indicator_height"/>
 
 </RelativeLayout>
