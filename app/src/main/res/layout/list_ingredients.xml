@@ -3,5 +3,5 @@
           android:id="@+id/txt_ingredient"
           android:padding="@dimen/standard_padding"
           android:layout_width="match_parent"
-          android:textSize="16sp"
+          android:textSize="@dimen/description_text_size"
           android:layout_height="wrap_content"/>

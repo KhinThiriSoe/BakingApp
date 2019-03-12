@@ -6,4 +6,5 @@
 
     <color name="title_color">@android:color/black</color>
     <color name="ic_play_color">#FF000000</color>
+    <color name="default_indicator_color">@android:color/darker_gray</color>
 </resources>
