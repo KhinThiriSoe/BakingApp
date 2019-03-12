@@ -23,31 +23,29 @@ class StepsActivity : AppCompatActivity() {
     }
 
     private var stepsFragment: StepsFragment? = null
-    private var stepList: ArrayList<Step>? = null
-    private var position: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_steps)
 
         if (intent.hasExtra(EXTRA_STEP_LIST)) {
-            stepList = intent.getParcelableArrayListExtra(EXTRA_STEP_LIST)
-            position = intent.getIntExtra(EXTRA_STEP_POSITION, 0)
+            val stepList = intent.getParcelableArrayListExtra<Step>(EXTRA_STEP_LIST)
+            val position = intent.getIntExtra(EXTRA_STEP_POSITION, 0)
+
+            stepsFragment = StepsFragment.newInstance(stepList!!, position)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, stepsFragment!!, "Step Fragment")
+                .commit()
+
         }
 
-        stepsFragment = StepsFragment.newInstance(stepList!!, position!!)
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, stepsFragment!!, "Step Fragment")
-            .commit()
-
-        setUpToolbar()
-
+        initView()
     }
 
-    private fun setUpToolbar() {
+    private fun initView() {
 
         if (supportActionBar != null) {
-            supportActionBar?.title = "Steps"
+            supportActionBar?.title = getString(R.string.steps)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }

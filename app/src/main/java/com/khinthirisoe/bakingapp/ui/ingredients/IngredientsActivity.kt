@@ -7,7 +7,6 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
-import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
 import com.khinthirisoe.bakingapp.ui.steps.StepsActivity
 import com.khinthirisoe.bakingapp.ui.steps.StepsFragment
@@ -26,9 +25,7 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
     private var stepsFragment: StepsFragment? = null
     private var preferencesHelper: AppPreferencesHelper? = null
 
-    private var bakingName: String? = null
-    private var stepList: ArrayList<Step>? = null
-    private var bakingRecipe: Recipe? = null
+    private var recipe: Recipe? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,28 +34,24 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
         preferencesHelper = AppPreferencesHelper(this)
 
         if (intent.hasExtra(EXTRA_BAKING)) {
-            bakingRecipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
-            bakingName = bakingRecipe!!.name
-            stepList = bakingRecipe!!.steps
+            recipe = intent.getParcelableExtra<Recipe>(EXTRA_BAKING)
+        }
+
+        initView()
+    }
+
+    private fun initView() {
+
+        if (supportActionBar != null) {
+            supportActionBar?.title = recipe?.name
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
         }
 
         supportFragmentManager.findFragmentById(R.id.list_selection_fragment) as IngredientsFragment
 
         fragmentContainer = findViewById(R.id.fragment_container)
         preferencesHelper!!.isLargeScreen = fragmentContainer != null
-
-        setUpToolbar()
-    }
-
-    private fun setUpToolbar() {
-
-        bakingName?.apply {
-            if (supportActionBar != null) {
-                supportActionBar?.title = bakingName
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                supportActionBar?.setDisplayShowHomeEnabled(true)
-            }
-        }
     }
 
     override fun onListItemClicked(position: Int) {
@@ -66,12 +59,12 @@ class IngredientsActivity : AppCompatActivity(), IngredientsFragment.OnFragmentI
         if (!preferencesHelper!!.isLargeScreen) {
             startActivity(
                 Intent(this, StepsActivity::class.java)
+                    .putParcelableArrayListExtra(StepsActivity.EXTRA_STEP_LIST, recipe?.steps)
                     .putExtra(StepsActivity.EXTRA_STEP_POSITION, position)
-                    .putParcelableArrayListExtra(StepsActivity.EXTRA_STEP_LIST, stepList)
             )
 
         } else {
-            stepsFragment = StepsFragment.newInstance(stepList!!, position)
+            stepsFragment = StepsFragment.newInstance(recipe!!.steps, position)
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_container,
