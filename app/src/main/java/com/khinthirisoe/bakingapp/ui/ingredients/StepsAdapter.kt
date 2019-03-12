@@ -7,7 +7,8 @@ import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.ui.base.inflate
 
 class StepsAdapter(
-    private var steps: ArrayList<Step>?
+    private var steps: ArrayList<Step>?,
+    private val clickListener: StepsRecyclerViewClickListener
 ) : RecyclerView.Adapter<StepsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StepsViewHolder {
@@ -17,6 +18,10 @@ class StepsAdapter(
     override fun onBindViewHolder(holder: StepsViewHolder, position: Int) {
 
         holder.onBind(steps!!, position)
+
+        holder.itemView.setOnClickListener {
+            clickListener.listItemClick(position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,5 +37,9 @@ class StepsAdapter(
 
         this.steps = steps
         notifyDataSetChanged()
+    }
+
+    interface StepsRecyclerViewClickListener {
+        fun listItemClick(position: Int)
     }
 }

@@ -16,7 +16,7 @@ import com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget
 import kotlinx.android.synthetic.main.fragment_ingredients.*
 
 
-class IngredientsFragment : Fragment() {
+class IngredientsFragment : Fragment(), StepsAdapter.StepsRecyclerViewClickListener{
 
     private var ingredientsAdapter: IngredientsAdapter? = null
     private var stepsAdapter: StepsAdapter? = null
@@ -82,7 +82,7 @@ class IngredientsFragment : Fragment() {
         )
         step_recyclerView.layoutManager = stepLayoutManager
 
-        stepsAdapter = StepsAdapter(null)
+        stepsAdapter = StepsAdapter(null, this)
 
         stepsAdapter?.setSteps(recipe!!.steps)
         step_recyclerView.adapter = stepsAdapter
@@ -105,9 +105,13 @@ class IngredientsFragment : Fragment() {
                 IngredientsAdapter(recipe!!.ingredients)
             ingredient_recyclerView.adapter = ingredientsAdapter
 
-            stepsAdapter = StepsAdapter(recipe!!.steps)
+            stepsAdapter = StepsAdapter(recipe!!.steps, this)
             step_recyclerView.adapter = stepsAdapter
         }
+    }
+
+    override fun listItemClick(position: Int) {
+        listener?.onListItemClicked(position)
     }
 
     interface OnFragmentInteractionListener {
