@@ -19,5 +19,4 @@ class FragmentModule(private val fragment: Fragment) {
     fun provideFragmentContext(): Context {
         return fragment.context!!
     }
-
 }

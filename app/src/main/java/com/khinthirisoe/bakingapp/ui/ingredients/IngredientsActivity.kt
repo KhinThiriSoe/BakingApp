@@ -9,7 +9,6 @@ import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import kotlinx.android.synthetic.main.activity_ingredients.*
 
-
 class IngredientsActivity : AppCompatActivity() {
 
     companion object {

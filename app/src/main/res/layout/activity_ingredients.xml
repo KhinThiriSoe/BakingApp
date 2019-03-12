@@ -23,7 +23,7 @@
 
                 <TextView
                         android:padding="@dimen/standard_padding"
-                        android:textSize="@dimen/title"
+                        android:textSize="@dimen/title_text_size"
                         android:textColor="@color/title_color"
                         android:text="@string/ingredients"
                         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
 
                 <TextView
                         android:padding="@dimen/standard_padding"
-                        android:textSize="@dimen/title"
+                        android:textSize="@dimen/title_text_size"
                         android:textColor="@color/title_color"
                         android:text="@string/steps"
                         android:layout_width="match_parent"

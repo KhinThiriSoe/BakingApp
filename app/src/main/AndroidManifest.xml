@@ -17,8 +17,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.steps.StepsActivity">
-        </activity>
+        <activity android:name=".ui.steps.StepsActivity"/>
         <activity android:name=".ui.ingredients.IngredientsActivity">
         </activity>
         <activity android:name=".ui.baking.view.BakingActivity">

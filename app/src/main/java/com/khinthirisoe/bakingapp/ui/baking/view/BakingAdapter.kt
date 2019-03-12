@@ -8,7 +8,7 @@ import com.khinthirisoe.bakingapp.ui.base.inflate
 
 
 class BakingAdapter(
-    private var recipes: MutableList<Recipe>?
+    private var recipes: ArrayList<Recipe>?
 ) : RecyclerView.Adapter<BakingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BakingViewHolder {

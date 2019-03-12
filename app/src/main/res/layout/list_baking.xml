@@ -37,7 +37,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/txt_serving"
                 android:textStyle="bold"
                 android:textColor="@color/title_color"
-                android:textSize="@dimen/title"
+                android:textSize="@dimen/title_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
