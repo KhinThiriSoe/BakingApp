@@ -10,7 +10,7 @@
             android:id="@+id/txt_short_description"
             android:padding="@dimen/standard_padding"
             android:layout_width="0dp"
-            android:textSize="16sp"
+            android:textSize="@dimen/description_text_size"
             android:layout_weight="@integer/txt_short_description_weight"
             android:layout_height="wrap_content"/>
 
