@@ -63,6 +63,8 @@ dependencies {
 
     implementation "com.android.support:multidex:$multidexVersion"
 
+    implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
+
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"

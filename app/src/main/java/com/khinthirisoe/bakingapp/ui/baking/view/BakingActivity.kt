@@ -35,8 +35,9 @@ class BakingActivity : BaseActivity(), BakingContract.View {
 
         initView()
 
-        presenter.fetchBakingRecipes()
-
+        baking_recyclerView.postDelayed({
+            presenter.fetchBakingRecipes()
+        }, 3000)
     }
 
     private fun initView() {
@@ -49,6 +50,7 @@ class BakingActivity : BaseActivity(), BakingContract.View {
     }
 
     override fun showBakingLists(recipes: ArrayList<Recipe>) {
+
         bakingAdapter?.setRecipes(recipes)
         baking_recyclerView.adapter = bakingAdapter
     }
