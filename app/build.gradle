@@ -55,7 +55,7 @@ ext {
     roomVersion = '1.0.0'
     multidexVersion = '1.0.3'
     androidxJunitVersion = '1.1.0'
-    testRuleVersion = '1.0.2'
+    testRuleVersion = '1.1.0'
 }
 
 dependencies {
@@ -93,7 +93,9 @@ dependencies {
 
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
 
+    androidTestImplementation "androidx.test:rules:$testRuleVersion"
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
 }
