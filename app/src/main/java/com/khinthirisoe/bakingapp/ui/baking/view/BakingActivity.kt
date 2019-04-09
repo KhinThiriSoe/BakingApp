@@ -46,8 +46,8 @@ class BakingActivity : BaseActivity(), BakingContract.View, BakingAdapter.Baking
 
     private fun initView() {
 
-        bakingRecyclerView = findViewById(com.khinthirisoe.bakingapp.R.id.recyclerView)
-        progressBar = findViewById(com.khinthirisoe.bakingapp.R.id.progressBar)
+        bakingRecyclerView = findViewById(R.id.recyclerView)
+        progressBar = findViewById(R.id.progressBar)
 
         val layoutManager =
             GridLayoutManager(this, resources.getInteger(R.integer.number_of_grid_items))
