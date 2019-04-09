@@ -3,18 +3,13 @@ package com.khinthirisoe.bakingapp.data.db
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.BaseColumns
+import com.khinthirisoe.bakingapp.data.db.DbConstant.TYPE_PRIMARY_KEY_TEXT_UNIQUE
+import com.khinthirisoe.bakingapp.data.db.DbConstant.TYPE_TEXT
 
 object IngredientsContract {
 
     const val CONTENT_AUTHORITY = "com.khinthirisoe.bakingapp"
     val BASE_CONTENT_URI: Uri = Uri.parse("content://$CONTENT_AUTHORITY")
-
-    const val TYPE_TEXT = "TEXT"
-    const val PRIMARY_KEY = " PRIMARY KEY"
-    const val NOT_NULL = " NOT NULL"
-    const val UNIQUE = " UNIQUE"
-    const val TYPE_PRIMARY_KEY_TEXT_UNIQUE = TYPE_TEXT + PRIMARY_KEY + NOT_NULL + UNIQUE
-    const val TYPE_TEXT_NOT_NULL = TYPE_TEXT + NOT_NULL
 
     class Ingredients : BaseColumns {
 

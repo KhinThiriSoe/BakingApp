@@ -5,11 +5,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.khinthirisoe.bakingapp.data.db.IngredientsContract.Ingredients
 
-class IngredientsDbHelper(context: Context) : SQLiteOpenHelper(
-    context,
-    DATABASE_NAME, null,
-    DATABASE_VERSION
-) {
+class IngredientsDbHelper(context: Context) :
+    SQLiteOpenHelper(
+        context,
+        DATABASE_NAME, null,
+        DATABASE_VERSION
+    ) {
 
     companion object {
 

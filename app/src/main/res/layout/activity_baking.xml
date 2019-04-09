@@ -16,13 +16,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+            android:id="@+id/baking_recyclerView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp"
+            app:shimmer_demo_shimmer_color="#21ffffff"
+            app:shimmer_demo_layout="@layout/layout_demo_grid"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,9 +26,7 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/baking_app_widget_info"/>
         </receiver>
-
-        <activity android:name=".ui.steps.view.StepsActivity">
-        </activity>
+        <activity android:name=".ui.steps.StepsActivity"/>
         <activity android:name=".ui.ingredients.IngredientsActivity">
         </activity>
         <activity android:name=".ui.baking.view.BakingActivity">

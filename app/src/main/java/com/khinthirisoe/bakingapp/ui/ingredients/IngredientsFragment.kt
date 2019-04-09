@@ -8,104 +8,114 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.db.repository.IngredientsRepository
-import com.khinthirisoe.bakingapp.data.model.Ingredient
 import com.khinthirisoe.bakingapp.data.model.Recipe
-import com.khinthirisoe.bakingapp.data.model.Step
 import com.khinthirisoe.bakingapp.data.prefs.AppPreferencesHelper
 import com.khinthirisoe.bakingapp.ui.widget.BakingAppWidget
+import kotlinx.android.synthetic.main.fragment_ingredients.*
 
 
-class IngredientsFragment : Fragment(), StepsAdapter.StepRecyclerViewClickListener {
+class IngredientsFragment : Fragment(), StepsAdapter.StepsRecyclerViewClickListener{
 
-    private lateinit var ingredientRecyclerView: RecyclerView
     private var ingredientsAdapter: IngredientsAdapter? = null
-    private lateinit var stepRecyclerView: RecyclerView
     private var stepsAdapter: StepsAdapter? = null
     private lateinit var repository: IngredientsRepository
-    private lateinit var pref: AppPreferencesHelper
+    private lateinit var preferencesHelper: AppPreferencesHelper
 
-    private var stepList: MutableList<Step>? = null
+    private var recipe: Recipe? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
 
         val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
 
         repository = IngredientsRepository(context!!)
-        pref = AppPreferencesHelper(context!!)
-
-        setUpView(view)
+        preferencesHelper = AppPreferencesHelper(context!!)
 
         val bundle = activity!!.intent.extras
         if (bundle != null) {
-            val recipe = bundle.getParcelable<Recipe>(IngredientsActivity.EXTRA_BAKING)
-
-            configureUI(recipe)
+            recipe = bundle.getParcelable<Recipe>(IngredientsActivity.EXTRA_BAKING)
         }
 
         return view
     }
 
-    private fun setUpView(view: View) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        ingredientRecyclerView = view.findViewById(com.khinthirisoe.bakingapp.R.id.ingredient_recyclerView)
-        stepRecyclerView = view.findViewById(com.khinthirisoe.bakingapp.R.id.step_recyclerView)
+        initView()
 
-        val mIngredientLayoutManager = LinearLayoutManager(context)
-        ingredientRecyclerView.layoutManager = mIngredientLayoutManager
+    }
 
-        val mLayoutManager = LinearLayoutManager(context)
-        stepRecyclerView.addItemDecoration(
+    private fun initView() {
+
+        setupIngredients()
+
+        setUpSteps()
+
+        setUpUI()
+
+    }
+
+    private fun setupIngredients() {
+        val ingredientLayoutManager = LinearLayoutManager(context)
+        ingredient_recyclerView.layoutManager = ingredientLayoutManager
+
+        ingredientsAdapter = IngredientsAdapter(null)
+
+        ingredientsAdapter?.setIngredients(recipe!!.ingredients)
+        ingredient_recyclerView.adapter = ingredientsAdapter
+
+    }
+
+    private fun setUpSteps() {
+
+        val stepLayoutManager = LinearLayoutManager(context)
+        step_recyclerView.addItemDecoration(
             DividerItemDecoration(
-                stepRecyclerView.context,
+                step_recyclerView.context,
                 DividerItemDecoration.VERTICAL
             )
         )
-        stepRecyclerView.layoutManager = mLayoutManager
+        step_recyclerView.layoutManager = stepLayoutManager
+
+        stepsAdapter = StepsAdapter(null, this)
+
+        stepsAdapter?.setSteps(recipe!!.steps)
+        step_recyclerView.adapter = stepsAdapter
     }
 
-    private fun configureUI(recipe: Recipe?) {
-
-        recipe?.apply {
-
-            stepList = recipe.steps
+    private fun setUpUI() {
+        recipe?.let {
 
             repository.removeIngredient()
 
-            repository.saveIngredients(recipe.ingredients)
+            repository.saveIngredients(recipe!!.ingredients)
 
-            pref.recipeName = recipe.name
+            preferencesHelper.recipeName = recipe!!.name
 
             activity!!.runOnUiThread {
                 BakingAppWidget.sendRefreshBroadcast(context!!)
             }
 
             ingredientsAdapter =
-                IngredientsAdapter(recipe.ingredients as MutableList<Ingredient>)
-            ingredientRecyclerView.adapter = ingredientsAdapter
+                IngredientsAdapter(recipe!!.ingredients)
+            ingredient_recyclerView.adapter = ingredientsAdapter
 
-            stepsAdapter = StepsAdapter(recipe.steps as MutableList<Step>, this@IngredientsFragment)
-            stepRecyclerView.adapter = stepsAdapter
+            stepsAdapter = StepsAdapter(recipe!!.steps, this)
+            step_recyclerView.adapter = stepsAdapter
         }
     }
 
-    override fun listItemClick(step: Step) {
-        listener?.onListItemClicked(step)
+    override fun listItemClick(position: Int) {
+        listener?.onListItemClicked(position)
     }
 
     interface OnFragmentInteractionListener {
-        fun onListItemClicked(step: Step)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): IngredientsFragment {
-            return IngredientsFragment()
-        }
+        fun onListItemClicked(position: Int)
     }
 
     override fun onAttach(context: Context) {
