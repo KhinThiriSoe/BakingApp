@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.khinthirisoe.bakingapp.R
 import com.khinthirisoe.bakingapp.data.model.Recipe
 import com.khinthirisoe.bakingapp.di.component.AppComponent
 import com.khinthirisoe.bakingapp.di.component.DaggerActivityComponent
@@ -30,12 +31,13 @@ class BakingActivity : BaseActivity(), BakingContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.khinthirisoe.bakingapp.R.layout.activity_baking)
+        setContentView(R.layout.activity_baking)
 
         initView()
 
-        presenter.fetchBakingRecipes()
-
+        baking_recyclerView.postDelayed({
+            presenter.fetchBakingRecipes()
+        }, 3000)
     }
 
     private fun initView() {
@@ -48,6 +50,7 @@ class BakingActivity : BaseActivity(), BakingContract.View {
     }
 
     override fun showBakingLists(recipes: ArrayList<Recipe>) {
+
         bakingAdapter?.setRecipes(recipes)
         baking_recyclerView.adapter = bakingAdapter
     }

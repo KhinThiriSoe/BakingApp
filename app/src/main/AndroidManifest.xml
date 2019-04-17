@@ -17,6 +17,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <receiver android:name=".ui.widget.BakingAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/baking_app_widget_info"/>
+        </receiver>
         <activity android:name=".ui.steps.StepsActivity"/>
         <activity android:name=".ui.ingredients.IngredientsActivity">
         </activity>
@@ -27,6 +36,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <provider
+                android:authorities="com.khinthirisoe.bakingapp"
+                android:name="com.khinthirisoe.bakingapp.data.db.IngredientsProvider"
+                android:exported="false"></provider>
+
+        <service android:name=".ui.widget.BakingWidgetRemoteViewsService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

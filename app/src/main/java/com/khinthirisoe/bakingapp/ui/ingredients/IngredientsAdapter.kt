@@ -28,7 +28,6 @@ class IngredientsAdapter(
     }
 
     fun setIngredients(ingredients: ArrayList<Ingredient>) {
-
         this.ingredients = ingredients
         notifyDataSetChanged()
     }
