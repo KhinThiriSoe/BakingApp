@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: Run Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
 
   build:
     name: Generate APK
-    runs-on: macOS
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
